@@ -271,7 +271,7 @@ a {
 	flex-direction: column;
 }
 
-pass form {
+#pass form {
 	text-align: left;
 	margin-top: 30px;
 	display: flex;
@@ -306,14 +306,32 @@ input[type="submit"] {
 	text-align: center;
 	border-radius: 60px;
 }
+.filtres {
+	display: flex;
+}
 
+.filtres input {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: #1D6154;
+	background-color: #ffffff;
+	margin: 2em auto;
+	width: 180px;
+	height: 50px;
+	text-align: center;
+	border-radius: 60px;
+}
+
+
+.filtres input:hover {
+	background-color: #1D6154;
+	color: white;
+}
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
 }
-
-
 
 .log {
 	margin: 20px;

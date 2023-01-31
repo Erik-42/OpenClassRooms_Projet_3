@@ -31,3 +31,49 @@ function genererFiches(fiches) {
 
 //Création des fiches
 genererFiches(fiches);
+
+//Filtres
+//Filtres TOus
+const btnall = document.querySelector(".btnall");
+
+btnall.addEventListener("click", function () {
+    const filtresFiches = fiches.filter(function (filtres) {
+        return filtres.category;
+    })
+    //console.log(filtresFiches);
+    document.querySelector(".gallery").innerHTML = "";
+    genererFiches(filtresFiches);
+});
+//Filtres objets
+const btnobjets = document.querySelector(".btnobjets");
+
+btnobjets.addEventListener("click", function () {
+    const filtresFiches = fiches.filter(function (filtres) {
+        return filtres.category.id == 1;
+    })
+    //console.log(filtresFiches);
+    document.querySelector(".gallery").innerHTML = "";
+    genererFiches(filtresFiches);
+});
+//Filtres appart
+const btnappart = document.querySelector(".btnappart");
+
+btnappart.addEventListener("click", function () {
+    const filtresFiches = fiches.filter(function (filtres) {
+        return filtres.category.id == 2;
+    })
+    //console.log(filtresFiches);
+    document.querySelector(".gallery").innerHTML = "";
+    genererFiches(filtresFiches);
+});
+//Filtres hotels
+const btnhotels = document.querySelector(".btnhotels");
+
+btnhotels.addEventListener("click", function () {
+    const filtresFiches = fiches.filter(function (filtres) {
+        return filtres.category.id == 3;
+    })
+    //console.log(filtresFiches);
+    document.querySelector(".gallery").innerHTML = "";
+    genererFiches(filtresFiches);
+});
