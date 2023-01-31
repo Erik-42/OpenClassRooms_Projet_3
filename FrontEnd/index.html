@@ -13,11 +13,27 @@
 	<link rel="stylesheet" href="./assets/style.css">
 	<script type="module" src="./js/main.js"></script>
 	<script type="module" src="./js/login.js"></script>
+	<script type="module" src="./js/app.js"></script>
 </head>
 
 <body>
 	<header>
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		<!--Début Modale-->
+		<a href="#modal1" class="jsModal">mode édition</a>
+		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal"
+			style="display: none;">
+			<div class="modal-wrapper jsModalStop">
+				<button class="jsModalClose">Fermer la modale</button>
+				<h1 class="titlemodal">Galerie photo</h1>
+				<section class="ajoutProjet"></section>
+				<div>
+					<input class="ajout" type="submit" value="Ajouter une photo">
+				</div>
+				<a href="#">supprimer la galerie</a>
+			</div>
+		</aside>
+		<!--Fin Modale-->
 		<nav>
 			<ul>
 				<li>
@@ -38,6 +54,7 @@
 		</nav>
 	</header>
 	<main>
+		<!--Début presentation-->
 		<section id="introduction">
 			<figure>
 				<img src="./assets/images/sophie-bluel.png" alt="">
@@ -53,6 +70,8 @@
 					décorateur(trice)</p>
 			</article>
 		</section>
+		<!--Fin presentation-->
+		<!--Début portfolio-->
 		<section id="portfolio">
 			<h2>Mes Projets</h2>
 			<div class="filtres">
@@ -64,6 +83,8 @@
 			<div class="gallery">
 			</div>
 		</section>
+		<!--Fin portfolio-->
+		<!--Début formulaire contact-->
 		<section id="contact">
 			<h2>Contact</h2>
 			<p>Vous avez un projet ? Discutons-en !</p>
@@ -77,6 +98,7 @@
 				<input type="submit" value="Envoyer">
 			</form>
 		</section>
+		<!--Fin formulaire contact-->
 	</main>
 
 	<footer>
