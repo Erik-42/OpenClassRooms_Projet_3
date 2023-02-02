@@ -5,8 +5,8 @@ let fiches = window.localStorage.getItem('fiches');
 // Fiches stockées en local
 if (fiches === null) {
     // Récupération des fiches depuis le fichier JSON
-    const askApi = await fetch('./js/works.json');
-    //const askApi = await fetch('http://localhost:5678/api/works');
+    //const askApi = await fetch('./js/works.json');
+    const askApi = await fetch('http://localhost:5678/api/works');
     fiches = await askApi.json();
 
     // Transformation des fiches en JSON
