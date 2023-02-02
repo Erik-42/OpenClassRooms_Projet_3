@@ -17,17 +17,17 @@
 
 <body>
     <header>
-        <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+        <h1>Sophie Bluel<span>Architecte d'intérieur</span></h1>
         <nav>
             <ul>
                 <li>
                     <a href="#projets">projets</a>
                 </li>
                 <li>
-                    <a href="#contact">contact</a>
+                    <a href="index.html">contact</a>
                 </li>
                 <li>
-                    <a href="#login">login</a>
+                    <a href="login.html">login</a>
                 </li>
                 <li>
                     <a href="http://instagram.com" target="_blank">
@@ -40,20 +40,17 @@
     <main>
         <section id="pass">
             <h2>Log in</h2>
-            <form>
-                <div>
-                    <div class="log">
-                        <label for="email">E-mail</label>
-                        <input type="email" name="email" id="email" maxlength="255" placeholder="E-mail">
-                    </div>
-                    <div class="log">
-                        <label for="password">Mot de passe</label>
-                        <input type="password" name="password" id="password" maxlength="60" placeholder="Mot de passe">
-                    </div>
-                    <input type="submit" value="Se connecter">
-                    <div>
-                        <a class="forgot-password" href="#">Mot de passe oublié</a>
-                    </div>
+            <p>Connectez-vous !</p>
+            <form action="#" method="post">
+                <label for="mail">E-mail</label>
+                <input id="email" type="email" required name="email" id="email" maxlength="255"
+                    placeholder="ex: john.doe@domaine.com">
+                <label for="password">Mot de passe (8 characters minimum)</label>
+                <input id="password" type="password" required name="password" id="password" minlength="8" maxlength="60"
+                    autocomplete="current-password" placeholder="oublie l'anniv de mamie">
+                <input id="connect" type="submit" value="Se connecter">
+
+                <a class="forgotpassword" href="#">Mot de passe oublié</a>
             </form>
         </section>
     </main>
