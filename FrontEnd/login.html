@@ -1,67 +1,81 @@
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Sophie Bluel - Architecte d'intérieur</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
-        rel="stylesheet">
-    <meta name="description" content="">
-    <link rel="stylesheet" href="./assets/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="./assets/style.css" />
     <script type="module" src="./js/main.js"></script>
     <script type="module" src="./js/login.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <h1>Sophie Bluel<span>Architecte d'intérieur</span></h1>
-        <nav>
-            <ul>
-                <li>
-                    <a href="#projets">projets</a>
-                </li>
-                <li>
-                    <a href="index.html">contact</a>
-                </li>
-                <li>
-                    <a href="login.html">login</a>
-                </li>
-                <li>
-                    <a href="http://instagram.com" target="_blank">
-                        <img src="./assets/icons/instagram.png" alt="Instagram">
-                    </a>
-                </li>
-            </ul>
-        </nav>
+      <h1>Sophie Bluel<span>Architecte d'intérieur</span></h1>
+      <nav>
+        <ul>
+          <li>
+            <a href="#projets">projets</a>
+          </li>
+          <li>
+            <a href="index.html">contact</a>
+          </li>
+          <li>
+            <a href="login.html">login</a>
+          </li>
+          <li>
+            <a href="http://instagram.com" target="_blank">
+              <img src="./assets/icons/instagram.png" alt="Instagram" />
+            </a>
+          </li>
+        </ul>
+      </nav>
     </header>
     <main>
-        <section id="pass">
-            <h2>Log in</h2>
-            <p>Connectez-vous !</p>
-            <form action="#" method="post">
-                <label for="mail">E-mail</label>
-                <input id="email" type="email" required name="email" id="email" maxlength="255"
-                    placeholder="ex: john.doe@domaine.com">
-                <label for="password">Mot de passe (8 characters minimum)</label>
-                <input id="password" type="password" required name="password" id="password" minlength="8" maxlength="60"
-                    autocomplete="current-password" placeholder="oublie l'anniv de mamie">
-                <input id="connect" type="submit" value="Se connecter">
+      <section id="pass">
+        <h2>Log in</h2>
+        <p>Connectez-vous !</p>
+        <form id="loginForm" action="#" method="post">
+          <label for="mail">E-mail</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            id="email"
+            maxlength="128"
+            placeholder="ex: omer.simpson@springfield.com"
+          />
+          <label for="password">Mot de passe (8 characters minimum)</label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            id="password"
+            minlength="5"
+            maxlength="64"
+            autocomplete="current-password"
+            placeholder="pas l'anniv de Marge"
+          />
+          <input id="connect" type="submit" value="Se connecter" />
 
-                <a class="forgotpassword" href="#">Mot de passe oublié</a>
-            </form>
-        </section>
+          <a class="forgotpassword" href="#">Mot de passe oublié</a>
+        </form>
+      </section>
     </main>
 
     <footer>
-        <nav>
-            <ul>
-                <li>Mentions Légales</li>
-            </ul>
-        </nav>
+      <nav>
+        <ul>
+          <li>Mentions Légales</li>
+        </ul>
+      </nav>
     </footer>
-</body>
-
+  </body>
 </html>
