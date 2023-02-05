@@ -1,4 +1,4 @@
-//localStorage.clear()
+//sessionStorage.clear();
 const loginForm = document.getElementById("loginForm");
 const connect = document.getElementById("connect");
 const email = document.getElementById("email");
@@ -11,12 +11,13 @@ connect.addEventListener("click", (event) => {
 password: S0phie */
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  console.log(email.value, password.value);
+  //console.log(email.value, password.value);
   const bodyJson = JSON.stringify({
     email: email.value,
     password: password.value,
   });
-  console.log(bodyJson);
+  //console.log(bodyJson);
+  //const login = await fetch("./js/users.json", {
   const login = await fetch("http://localhost:5678/api/users/login", {
     method: "POST",
     headers: {
@@ -25,6 +26,18 @@ loginForm.addEventListener("submit", async (event) => {
     body: bodyJson,
   });
   const data = await login.json();
+  console.log(data);
+  console.log(login);
   //todo tester token si pas token message erreur sinon sessionstorage
+  /*if (login.status === 404) {
+    throw "user not found";
+  } else {
+    if (login.status === "401") {
+    throw `console.log("Not Authorized")`;
+  } else {
+    if (login.status === "200")
+    return window.location.href = "./index.html";
+    window.sessionstorage.getitem("data");
+  }*/
   window.location.href = "./index.html";
 });

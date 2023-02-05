@@ -21,6 +21,20 @@
     <header>
       <h1>Sophie Bluel<span>Architecte d'intérieur</span></h1>
 
+      <!--<a href="#modal1" class="jsModal">mode édition</a>
+		<a href="modal.html#modal2" class="jsModal">suite édition ajax</a>
+		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal"
+			style="display: none;">
+			<div class="modal-wrapper jsModalStop">
+				<button class="jsModalClose">Fermer la modale</button>
+				<h1 class="titlemodal">Galerie photo</h1>
+				<section class="galler"></section>
+				<div>
+					<input class="ajout" type="submit" value="Ajouter une photo">
+				</div>
+				<a href="#">supprimer la galerie</a>
+			</div>
+		</aside>-->
       <nav>
         <ul>
           <li>
@@ -79,11 +93,24 @@
         <p>Vous avez un projet ? Discutons-en !</p>
         <form action="#" method="post">
           <label for="name">Nom</label>
-          <input type="text" name="name" id="name" />
+          <input type="text" name="name" id="name" placeholder="ex: Omer" />
           <label for="email">E-mail</label>
-          <input type="email" name="email" id="email" />
+          <input
+            type="email"
+            required
+            name="email"
+            id="email"
+            maxlength="128"
+            placeholder="ex: omer.simpson@springfield.com"
+          />
           <label for="message">Message</label>
-          <textarea name="message" id="message" cols="30" rows="10"></textarea>
+          <textarea
+            name="message"
+            id="message"
+            cols="30"
+            rows="10"
+            placeholder="Quel est ta requête ?"
+          ></textarea>
           <input class="envoiContact" type="submit" value="Envoyer" />
         </form>
       </section>

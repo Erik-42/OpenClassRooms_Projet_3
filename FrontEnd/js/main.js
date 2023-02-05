@@ -1,12 +1,11 @@
 //sessionStorage.clear;
-
 //Récupération des fiches eventuellement stockées dans le sessionStorage
 let fiches = window.sessionStorage.getItem("fiches");
 
-// Fiches stockées en session
+// Fiches stockées en local
 if (fiches === null) {
   // Récupération des fiches depuis le fichier JSON
-  //const askApi = await fetch('./js/works.json');
+  //const askApi = await fetch("./js/works.json");
   const askApi = await fetch("http://localhost:5678/api/works");
   fiches = await askApi.json();
 
@@ -54,7 +53,7 @@ btnall.addEventListener("click", function () {
   const filtresFiches = fiches.filter(function (filtres) {
     return filtres.category;
   });
-
+  //console.log(filtresFiches);
   document.querySelector(".gallery").innerHTML = "";
   genererFiches(filtresFiches);
 });
@@ -65,7 +64,7 @@ btnobjets.addEventListener("click", function () {
   const filtresFiches = fiches.filter(function (filtres) {
     return filtres.category.id == 1;
   });
-
+  //console.log(filtresFiches);
   document.querySelector(".gallery").innerHTML = "";
   genererFiches(filtresFiches);
 });
@@ -76,7 +75,7 @@ btnappart.addEventListener("click", function () {
   const filtresFiches = fiches.filter(function (filtres) {
     return filtres.category.id == 2;
   });
-
+  //console.log(filtresFiches);
   document.querySelector(".gallery").innerHTML = "";
   genererFiches(filtresFiches);
 });
@@ -87,7 +86,7 @@ btnhotels.addEventListener("click", function () {
   const filtresFiches = fiches.filter(function (filtres) {
     return filtres.category.id == 3;
   });
-
+  //console.log(filtresFiches);
   document.querySelector(".gallery").innerHTML = "";
   genererFiches(filtresFiches);
 });
