@@ -262,6 +262,44 @@ input[type="button"]:focus {
 	background-color: #1D6154;
 }
 
+/*Barre edition*/
+.edition {
+	background-color: #000000;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 19px;
+	color: #000000;
+	text-align: center ;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+}
+.edition p, i{
+	color: #fff;
+	margin-left:10px;
+}
+
+#btnChange {
+	font-family: 'Work Sans';
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	color: #000000;
+	background: #fff;
+	border: black solid 2px;
+	width: 215px;
+	height: 40px;
+	margin: 10px;
+}
+
+#btnChange:hover {
+font-weight: 700;
+background-color: red;
+color: yellow;
+}
+
 /* footer */
 footer nav ul {
 	display: flex;
