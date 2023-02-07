@@ -2,99 +2,14 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+/* générale*/
+* {
 	margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-}
-
-a {
-	text-decoration: none;
-	color: #000000;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -140,7 +55,7 @@ table {
 }
 
 /** end reset css**/
-/* CSS général */
+
 body {
 	max-width: 1140px;
 	margin: auto;
@@ -181,6 +96,12 @@ h2 {
 	color: #1D6154
 }
 
+a {
+	text-decoration: none;
+	color: #000000;
+}
+
+/* barre navigation */
 nav ul {
 	display: flex;
 	align-items: center;
@@ -198,29 +119,30 @@ li:hover {
 	font-weight: 700;
 }
 
-a {
-	text-decoration: none;
-	color: #000000;
-}
-
-/* CSS Presentaton */
+/* Presentation */
 #introduction {
 	display: flex;
 	align-items: center;
+	margin-top: 140px;
+	margin-bottom: 200px;
+	
 }
 
 #introduction figure {
-	flex: 1
+	flex: 1;
+	color: #000000;
 }
 
 #introduction img {
 	display: block;
 	margin: auto;
-	width: 80%;
+	width: 100%;
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
+	margin-left: 70px;
+	width: 100%;
 }
 
 #introduction h2 {
@@ -231,7 +153,12 @@ a {
 	margin-bottom: 0.5em;
 }
 
-/* CSS Portfolio */
+#modifierProjets, #modifierSophie {
+	font-weight: 400;
+	padding: 20px;
+}
+
+/* Portfolio*/
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
@@ -250,7 +177,7 @@ a {
 
 }
 
-/* CSS formulaires */
+/* formulaires */
 #contact,
 #pass {
 	width: 50%;
@@ -268,13 +195,7 @@ a {
 	margin-bottom: 20px;
 }
 
-#contact form {
-	text-align: left;
-	margin-top: 30px;
-	display: flex;
-	flex-direction: column;
-}
-
+#contact form,
 #pass form {
 	text-align: left;
 	margin-top: 30px;
@@ -288,6 +209,11 @@ a {
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#pass form {
+	margin: auto;
+	width: 379px;
 }
 
 #contact label,
@@ -309,22 +235,20 @@ input[type="submit"] {
 	width: 180px;
 	text-align: center;
 	border-radius: 60px;
+	height: 50px;
 }
 
-.login {
-	margin: 20px;
-	display: flexbox;
-	align-items: center;
-	justify-content: space-around;
-
+input[type="submit"]:hover {
+	color: white;
+	background-color: #0E2F28;
 }
 
-/* CSS filtres */
-.filtres {
-	display: flex;
+/* Filtres */
+#filtres {
+	text-align: center;
 }
 
-.filtres input {
+input[type="button"] {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: #1D6154;
@@ -334,15 +258,51 @@ input[type="submit"] {
 	height: 50px;
 	text-align: center;
 	border-radius: 60px;
+	border: #1D6154 solid 2px;
 }
 
-
-.filtres input:hover {
+input[type="button"]:hover {
 	background-color: #1D6154;
 	color: white;
 }
 
-/* CSS footer */
+input[type="button"]:focus {
+	color: #fff;
+	background-color: #1D6154;
+}
+
+#maskBarre {
+	background-color: #000000;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 19px;
+	color: #000000;
+	text-align: center ;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+}
+#maskBarre p, #maskBarre i{
+	color: #fff;
+	margin-left:10px;
+}
+
+#btnChange {
+	font-family: 'Work Sans';
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	color: #000000;
+	background: #fff;
+	border: black solid 2px;
+	width: 215px;
+	height: 40px;
+	margin: 10px;
+}
+
+/* footer */
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
@@ -350,38 +310,92 @@ footer nav ul {
 }
 
 /* CSS modale */
+/* général */
 * {
 	box-sizing: border-box;
 }
 
-*:focus {
-	box-shadow: 0 0 10px blue;
+/* gallerie modale*/
+.galleryModal {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 10px;
+	grid-row-gap: 10px;
+	/*margin-top:  50px;
+	margin-bottom: 50px;*/
+	padding: 50px;
 }
 
+.galleryModal h1 {
+	font-family: 'Work Sans';
+}
+
+.galleryModal img {
+	width: 100%;
+
+}
+
+/* Line de séparation */
+.line {
+	width: auto;
+	height: 0px;
+	left: 510px;
+	top: 1229px;
+	border: 1px solid #B3B3B3;
+	margin: 50px;
+}
+
+/* bouton ajout photo*/
+.ajoutPhoto {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin: 2em auto;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px;
+	height: 50px;
+}
+
+.ajoutPhoto:hover {
+	background-color: #1D6154;
+	color: white;
+}
+
+/* suppression gallerie*/
+.supp {
+	color: red;
+	margin: 50px;
+	margin: 50px;
+}
+
+/* modale elle meme*/
 .modal {
 	position: fixed;
 	display: flex;
-	align-items: center;
+	align-items:center ;
 	justify-content: center;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: rgba(0, 0, 0, 0.08);
+	background: rgba(0, 0, 0, 0.3);
 	animation: fadeIn .3s both;
 }
 
 .modal-wrapper {
 	overflow: auto;
 	width: 630px;
-	height: 731px;
+	/*height: auto;*/
 	max-width: calc(100vw - 20px);
 	max-height: calc(100vh - 20px);
 	padding: 20px;
 	background-color: #fff;
 	text-align: center;
 	border-radius: 10px;
-
+	animation: slideToBottom .3s both;
 }
 
 .modal-wrapper h1 {
@@ -389,10 +403,25 @@ footer nav ul {
 	font-size: 26px;
 	font-weight: 400;
 	color: #000000;
+	margin-top: 60px;
 }
 
-/* animation modale */
-@keyframes fadeIn {
+.cross {
+	display: flex;
+	justify-content: flex-end;
+}
+
+/*.modal[aria-hidden="true"] {
+	animation-name: fadeout;
+}
+
+.modal[aria-hidden="true"],
+.modal-wrapper {
+	animation-name: slideToBottom;
+}
+
+/* animation CSS*/
+/*@keyframes fadeIn {
 	from {
 		opacity: 0;
 	}
@@ -401,3 +430,33 @@ footer nav ul {
 		opacity: 1;
 	}
 }
+
+@keyframes slideFromTop {
+	from {
+		transform: translateY(-50px);
+	}
+
+	to {
+		transform: translateY(0px);
+	}
+}
+
+@keyframes fadeout {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes slideToBottom {
+	from {
+		transform: translateY(0px);
+	}
+
+	to {
+		transform: translateY(50px);
+	}
+}*/
