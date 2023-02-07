@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sophie Bluel - Architecte d'intérieur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="./assets/style.css" />
+    <script
+      src="https://kit.fontawesome.com/4ec6d39a0c.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/login.js"></script>
+    <script type="module" src="./js/app.js"></script>
+  </head>
+
+<body>
+  <header>
+    <nav>
+    </nav>
+
+  </header>
+    <!--modale 2-->
+    <!--faire apparaître si ajout photo-->
+    <aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal">
+      <div class="modal-wrapper">
+        <div class="navModal">
+          <a href="./index.html#modal1" class="fa-solid fa-arrow-left"></a>
+          <a href="./index.html" class="fa-solid fa-xmark"></a>
+        </div>
+        
+        <section id="ajout">
+          <h1 id="titleModal">Ajout photo</h1>          
+          <form class="insertPhotos" action="" method="post">
+            <!--Cadre ajout photos-->
+            <div id="cadreBleu">
+              <div class="preview">
+                <img src="./assets/icons/picture.png" alt="picture">
+              </div>
+              <input id="ajouterPhoto" class="ajouterPhoto" type="file" name="ajouterPhoto" accept=".jpg, .png" value="+ Ajouter photo"/>
+              <p>jpg, png : 4mo max</p>
+            </div>
+            <!--formulaire ajout photo-->
+            <label for="titre">Titre</label>
+            <input type="text" name="titre" required id="titrePhoto" placeholder="ex: Salon"/>
+            <label for="categorie">Catégorie</label>
+            <input type="text" name="categorie" required id="categoriePhoto" list="listeCategories" placeholder="ex: Objets"/>
+            <datalist id="listeCategories">
+<option value="Objets">Objets</option>
+<option value="Appartements">Appartements</option>
+<option value="Hotels & restaurants">Hotels & restaurants</option>
+            </datalist>
+          </form>
+            <!--ligne de séparation-->
+            <p class="line"></p>
+            <input
+              id="validerAjoutPhoto"
+              type="submit"
+              value="valider"/>
+        </section>
+
+        <main>
+        </main>
+      </div>
+    </aside>
+    <!-- fin modale 2-->
+    </div>
+</body>
+
+</html>

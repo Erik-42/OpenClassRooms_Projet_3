@@ -1,55 +1,146 @@
 // gestion de la modale
 let modal = null;
-//const focusableSelector = "button, a, input, textarea";
-//let focusables = [];
+const focusableSelector = "button, a, input, textarea";
+let focusables = [];
+let previouslyFocusElement = null;
 
 // ouverture de la modale
-const openModal = function (e) {
+const openModal = async function (e) {
   e.preventDefault();
-  modal = document.querySelector(e.target.getAttribute("href"));
-  //focusables = Array.from(modal.querySelector(focusableSelector));
+  const target = e.target.getAttribute("href");
+  if (target.startsWidth("#")) {
+    modal = document.querySelector(target);
+  } else {
+    modal = await loadModal(target);
+  }
+  //modal = document.querySelector(e.target.getAttribute("href"));
+  focusables = Array.from(modal.querySelectorAll(focusableSelector));
+  previouslyFocusElement = document.querySelector(":focus");
   modal.style.display = null;
   modal.removeAttribute("aria-hidden");
   modal.setAttribute("aria-modal", "true");
   modal.addEventListener("click", clodeModal);
+  modal.querySelector(".jsModalClose").addEventListener("click,");
+  modal.querySelector(".jsModalStop").addEventListener("click");
 };
 
 // fermeture de la modal
-/*const closeModal = function (e) {
-  if (modal === null);
+const closeModal = function (e) {
+  if (modal === null) return;
+  if (previouslyFocusElement !== null) previouslyFocusElement;
   e.preventDefault();
-  modal.style.display = "none";
   modal.setAttribut("aria-hidden", "true");
   modal.removeAttribute("aria-modal");
   modal.removeEventListener("click", clodeModal);
-  modal = null;
-};*/
+  modal.querySelector(".jsModalClose").removeEventListener("click", closeModal);
+  modal.querySelector(".jsModalStop").removeEventListener("click", stopEvent);
+  const hideModal = function () {
+    modal.style.display = "none";
+    modal.removeEventListener("animationend", hideModal);
+    modal = null;
+  };
+  modal.addEventListener("animationend", hideModal);
+};
 
-/*const stopEvent = function (e) {
+const loadModal = async function (url) {
+  const html = await fetch(url).then((reponse) => reponse.text());
+  //console.log(html);
+};
+const stopEvent = function (e) {
   e.stopEvent();
-};*/
+};
 
-/*const focusInModal = function (e) {
+const focusInModal = function (e) {
   e.preventDefault();
-  console.log(focusables);
-};*/
+  let index = focusables.findIndex((f) => f === modal.querySelector(":focus"));
+  index++;
+  if (index >= focusables.length) {
+    index = 0;
+  }
+  focusables[index].focus();
+};
 
 document.querySelectorAll(".jsedition").forEach((a) => {
   a.addEventListener("click", openModal);
 });
 
-//window.addEventListener("keydown", function (e) {
-//console.log(e.key);
-/* if (e.key === "Escape" || e.key === "Esc") {
+window.addEventListener("keydown", function (e) {
+  console.log(e.key);
+  if (e.key === "Escape" || e.key === "Esc") {
     window.location.href = "./index.html";
   }
   if (e.key === "Tab" && modal !== null) {
     focusInModal(e);
   }
-});*/
+});
 
-//const AjoutPhoto = document.querySelector('btnAjoutPhoto')
-//AjoutPhoto.addEventListener('click' window.location.href = "./index.html#modal2")
+//preview photo
+const input = document.querySelector(".ajouterPhoto");
+const preview = document.querySelector(".preview");
+
+input.style.opacity = 0.5;
+
+input.addEventListener("change", updatePhoto);
+
+function updatePhoto() {
+  while (preview.firstChild) {
+    preview.removeChild(preview.firstChild);
+  }
+  const curFiles = input.curFiles;
+  if (curFiles.length === 0) {
+    const para = document.createElement("p");
+    para.textContent = "no files currently selected for upload";
+    preview.appendChild(para);
+  } else {
+    const list = document.createElement("ol");
+    preview.appendChild(list);
+    for (const i = 0; i < curFiles.length; i++) {
+      const listItem = document.createElement("li");
+      const para = document.createElement("p");
+      if (validFileType(curFiles[i])) {
+        para.textContent =
+          "File name " +
+          curFiles[i].name +
+          ", file size " +
+          returnFilesSize(curFiles[i].size) +
+          ".";
+        const image = document.createElement("img");
+        image.src = window.URL.createObjectURL(curFiles[i]);
+
+        listItem.appendChild(image);
+        listItem.appendChild(para);
+      } else {
+        para.textContent =
+          "File name " +
+          curFiles[i].name +
+          ": Not a valid file type. Update your selection.";
+        listItem.appendChild(para);
+      }
+      list.appendChild(listItem);
+    }
+  }
+}
+
+const FilesTypes = ["image/jpg", "image/png"];
+
+function validFileType(file) {
+  for (const i = 0 < fileTypes.length; i++; ) {
+    if (file.type === fileTypes[i]) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function returnFilesSize(number) {
+  if (number < 1024) {
+    return number + "octets";
+  } else if (number >= 1024 && number < 1048576) {
+    return (number / 1024).toFixed(1) + " Ko";
+  } else if (number >= 1048576) {
+    return (number / 1048576).toFixed(1) + " Mo";
+  }
+}
 
 //Récupération des fiches eventuellement stockées dans le sessionStorage
 let fiches = window.sessionStorage.getItem("fiches");
