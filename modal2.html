@@ -38,20 +38,22 @@
         
         <section id="ajout">
           <h1 id="titleModal">Ajout photo</h1>          
-          <form class="insertPhotos" action="" method="post">
+          <form class="insertPhotos" method="post" enctype="multipart/form-data">
             <!--Cadre ajout photos-->
-            <div id="cadreBleu">
-              <div class="preview">
-                <img src="./assets/icons/picture.png" alt="picture">
-              </div>
-              <input id="ajouterPhoto" class="ajouterPhoto" type="file" name="ajouterPhoto" accept=".jpg, .png" value="+ Ajouter photo"/>
-              <p>jpg, png : 4mo max</p>
+            <div id="cadreBleu" class="preview">
+                <img class="iconPicture" src="./assets/icons/picture.png" alt="picture"></img>
+                  
+                  <label id="btnAjoutPhoto" for="ajouterPhoto">+ Ajouter photo
+                    <input id="ajouterPhoto" class="ajouterPhoto" type="file" name="ajouterPhoto" accept=".jpg, .png" value="+ Ajouter photo"/>
+                  </label>
+                  
+                <p>jpg, png : 4mo max</p>
             </div>
             <!--formulaire ajout photo-->
             <label for="titre">Titre</label>
-            <input type="text" name="titre" required id="titrePhoto" placeholder="ex: Salon"/>
+            <input type="text" name="titre" id="titrePhoto" placeholder="ex: Salon"/>
             <label for="categorie">Catégorie</label>
-            <input type="text" name="categorie" required id="categoriePhoto" list="listeCategories" placeholder="ex: Objets"/>
+            <input type="text" name="categorie" id="categoriePhoto" list="listeCategories" placeholder="ex: Objets"/>
             <datalist id="listeCategories">
 <option value="Objets">Objets</option>
 <option value="Appartements">Appartements</option>

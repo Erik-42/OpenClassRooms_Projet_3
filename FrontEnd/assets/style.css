@@ -220,6 +220,13 @@ li:hover {
   margin: auto;
   width: 380px;
 }
+.forgotpassword {
+  text-align: center;
+}
+.forgotpassword:hover {
+  font-size: 1.2em;
+}
+
 #ajout {
   margin: auto;
   width: 380px;
@@ -259,29 +266,52 @@ input[type="submit"]:hover {
   background-color: #0e2f28;
 }
 
+/* Modale ajout photo*/
 #cadreBleu {
   width: 420px;
   height: 169px;
+  text-align: center;
   background: #e8f1f7;
   border-radius: 3px;
-  text-align: center;
   display: grid;
   justify-items: center;
 }
 
+.preview img {
+  height: 100%;
+}
+
+.iconPicture {
+  object-fit: cover;
+  margin-top: 20px;
+  margin: 1em 0 -1em 0;
+}
+
+#cadreBleu p {
+  font-size: 10px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
 #ajouterPhoto {
+  display: none;
+}
+
+#btnAjoutPhoto {
   font-family: "Work Sans";
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
   text-align: center;
-  color: #000000;
+  color: #306685;
   background: #cbd6dc;
   border-radius: 50px;
-  border: black solid 2px;
   width: 173px;
   height: 36px;
   margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #validerAjoutPhoto {

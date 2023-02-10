@@ -74,80 +74,34 @@ window.addEventListener("keydown", function (e) {
   }
 });
 
-//preview photo
-const input = document.querySelector(".ajouterPhoto");
-const preview = document.querySelector(".preview");
+// preview image
 
-input.style.opacity = 0.5;
+const choixImage = document.getElementById("ajouterPhoto");
+const imgPreview = document.getElementById("cadreBleu");
 
-input.addEventListener("change", updatePhoto);
+ajouterPhoto.addEventListener("change", function () {
+  getImgData();
+});
 
-function updatePhoto() {
-  while (preview.firstChild) {
-    preview.removeChild(preview.firstChild);
-  }
-  const curFiles = input.curFiles;
-  if (curFiles.length === 0) {
-    const para = document.createElement("p");
-    para.textContent = "no files currently selected for upload";
-    preview.appendChild(para);
-  } else {
-    const list = document.createElement("ol");
-    preview.appendChild(list);
-    for (const i = 0; i < curFiles.length; i++) {
-      const listItem = document.createElement("li");
-      const para = document.createElement("p");
-      if (validFileType(curFiles[i])) {
-        para.textContent =
-          "File name " +
-          curFiles[i].name +
-          ", file size " +
-          returnFilesSize(curFiles[i].size) +
-          ".";
-        const image = document.createElement("img");
-        image.src = window.URL.createObjectURL(curFiles[i]);
-
-        listItem.appendChild(image);
-        listItem.appendChild(para);
-      } else {
-        para.textContent =
-          "File name " +
-          curFiles[i].name +
-          ": Not a valid file type. Update your selection.";
-        listItem.appendChild(para);
-      }
-      list.appendChild(listItem);
-    }
+function getImgData() {
+  const files = ajouterPhoto.files[0];
+  if (files) {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(files);
+    fileReader.addEventListener("load", function () {
+      imgPreview.style.display = "block";
+      imgPreview.innerHTML = '<img src="' + this.result + '" />';
+    });
   }
 }
 
-const FilesTypes = ["image/jpg", "image/png"];
-
-function validFileType(file) {
-  for (const i = 0 < fileTypes.length; i++; ) {
-    if (file.type === fileTypes[i]) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function returnFilesSize(number) {
-  if (number < 1024) {
-    return number + "octets";
-  } else if (number >= 1024 && number < 1048576) {
-    return (number / 1024).toFixed(1) + " Ko";
-  } else if (number >= 1048576) {
-    return (number / 1048576).toFixed(1) + " Mo";
-  }
-}
-
+//galerie Modal1
 //Récupération des fiches eventuellement stockées dans le sessionStorage
 let fiches = window.sessionStorage.getItem("fiches");
 
 // Fiches stockées en local
 if (fiches === null) {
-  // Récupération des fiches depuis le fichier JSON
+  // Récupération des fiches depuis le files JSON
   const askApi = await fetch("./js/works.json");
   //const askApi = await fetch("http://localhost:5678/api/works");
   fiches = await askApi.json();

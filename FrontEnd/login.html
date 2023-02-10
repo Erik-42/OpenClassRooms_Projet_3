@@ -22,16 +22,17 @@
       <nav>
         <ul>
           <li>
-            <a href="#projets">projets</a>
+            <a href="./index.html#portfolio">projets</a>
           </li>
           <li>
-            <a href="index.html">contact</a>
+            <a href="index.html#contact">contact</a>
           </li>
           <li>
             <a href="login.html">login</a>
           </li>
           <li>
-            <a href="http://instagram.com" target="_blank">
+            <a href="http://instagram.com" target="_blank"
+              ><!--ajouter le lien direct au compte de Sophie-->
               <img src="./assets/icons/instagram.png" alt="Instagram" />
             </a>
           </li>
@@ -42,7 +43,12 @@
       <section id="pass">
         <h2>Log in</h2>
         <p>Connectez-vous !</p>
-        <form id="loginForm" action="#" method="post">
+        <form
+          id="loginForm"
+          name="loginForm"
+          action="./index.html"
+          method="post"
+        >
           <label for="mail">E-mail</label>
           <!-- pensez à ajouter Required aux input-->
           <input
@@ -50,8 +56,9 @@
             type="email"
             name="email"
             id="email"
+            required
             maxlength="128"
-            placeholder="ex: omer.simpson@springfield.com"
+            placeholder="ex: sophie.bluel@test.tld"
           />
           <label for="password">Mot de passe (6 characters minimum)</label>
           <input
@@ -64,9 +71,15 @@
             autocomplete="current-password"
             placeholder="ex: S0phie"
           />
-          <input id="connect" type="submit" value="Se connecter" />
+          <input
+            id="connect"
+            type="submit"
+            value="Se connecter"
+          /><!--faire apparaitre la bande noire si la connexion est valide-->
+          <!--ajouter un message d'erreur sin connexion non valide-->
 
-          <a class="forgotpassword" href="#">Mot de passe oublié</a>
+          <a class="forgotpassword" href="#">Mot de passe oublié</a
+          ><!--a centrer dans le formulaire--><!--prevoir une procédure de récupération de password-->
         </form>
       </section>
     </main>
@@ -74,7 +87,7 @@
     <footer>
       <nav>
         <ul>
-          <li>Mentions Légales</li>
+          <a href="#"><li>Mentions Légales</li></a>
         </ul>
       </nav>
     </footer>

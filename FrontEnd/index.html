@@ -23,47 +23,81 @@
 
   <body>
     <!--Barre noir-->
-    <!--faire apparaitre à la connexion style="display: none"-->
-    <form id="maskBarre" class="jsedition">
+    <!--faire apparaitre à la connexion de la page login style="display: none" a modifier en js-->
+    <form id="maskBarre" class="jsEdition" style="display: none;">
       <i class="fa-regular fa-pen-to-square"></i>
       <p>Mode édition</p>
       <input id="btnChange" type="button" value="publier les changements" />
-      <a href="#modal1" class="jsedition" style="color: aliceblue">
-        ouvrir boite modal</a
-      >
+      <a href="#modal1"style="color: aliceblue">ouvrir boite modal</a>
     </form>
     <!--modale 1-->
-    <!--faire apparaitre si modifier-->
-    <aside
-      id="modal1"
-      class="modal"
-      aria-hidden="true"
-      role="dialog"
-      aria-labelledby="titleModal"
-      style="display: none"
-    >
+    <!--faire apparaitre si click sur modifier-->
+    <aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal" style="display: none;"><!--ajouter un style="display: none" a modifier en js si click btn ajouter photo-->
       <div class="modal-wrapper">
-        <span class="cross">
+        <div class="navModal">
+          <i class="fa-solid fa-arrow-left" style="color: white;"></i>
           <a href="./index.html" class="fa-solid fa-xmark"></a>
-        </span>
+        </div><!--ajouter procédure de fermeture simple des modal-->
         <h1 id="titleModal">Galerie photo</h1>
-        <!--gallerie modale-->
+        <!--galerie modale--><!--appeler la galerie de la page index et y ajouter les icones-->
         <div class="galleryModal"></div>
         <!--formulaire ajout photo-->
         <form>
           <!--ligne de séparation-->
-          <p class="line">-</p>
-          <input
-            class="ajoutPhoto"
-            type="submit"
-            accept=".jpg,.jpeg,.png,.tiff"
-            value="Ajouter une photo"
-          />
+          <p class="line"></p>
+          <input class="ajoutPhoto" type="submit" accept=".jpg,.jpeg,.png,.tiff" value="Ajouter une photo"/>
         </form>
+        <!--ajouter fenetre de confirmation de suppression-->
         <a class="supp" href="#">supprimer la galerie</a>
       </div>
     </aside>
     <!-- fin modale 1-->
+
+    <!--debut modale 2-->
+    <!--faire apparaître si click btn ajouter photo-->
+    <aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal" style="display: none;">
+      <div class="modal-wrapper">
+        <div class="navModal">
+          <!--retour a la modal 1-->
+          <a href="#modal1" class="fa-solid fa-arrow-left"></a>
+          <!--fermer la modal--><!--ajouter procédure de fermeture simple des modal-->
+          <a href="./index.html" class="fa-solid fa-xmark"></a>
+        </div>
+        
+        <section id="ajout">
+          <h1 id="titleModal">Ajout photo</h1>          
+          <form class="insertPhotos" method="post" enctype="multipart/form-data">
+            <!--Cadre ajout photos-->
+            <div id="cadreBleu" class="preview">
+                <img class="iconPicture" src="./assets/icons/picture.png" alt="picture"></img>
+                  
+                  <label id="btnAjoutPhoto" for="ajouterPhoto">+ Ajouter photo
+                    <input id="ajouterPhoto" class="ajouterPhoto" type="file" name="ajouterPhoto" accept=".jpg, .png" value="+ Ajouter photo"/>
+                  </label>
+                  
+                <p>jpg, png : 4mo max</p>
+            </div>
+            <!--formulaire ajout photo-->
+            <label for="titre">Titre</label>
+            <input type="text" name="titre" id="titrePhoto" placeholder="ex: Salon"/><!--ajouter un required-->
+            <label for="categorie">Catégorie</label>
+            <input type="text" name="categorie" id="categoriePhoto" list="listeCategories" placeholder="ex: Objets"/><!--ajouter un required-->
+            <datalist id="listeCategories">
+<option value="Objets">Objets</option>
+<option value="Appartements">Appartements</option>
+<option value="Hotels & restaurants">Hotels & restaurants</option>
+            </datalist>
+          </form>
+            <!--ligne de séparation-->
+            <p class="line"></p>
+            <input id="validerAjoutPhoto" type="submit" value="valider"/><!--faire la procedure d'ajout de la photo dans la galerie-->
+        </section>
+
+        <main>
+        </main>
+      </div>
+    </aside>
+    <!-- fin modale 2-->
 
     <header>
       <h1>Sophie Bluel<span>Architecte d'intérieur</span></h1>
@@ -72,7 +106,7 @@
       <nav>
         <ul>
           <li>
-            <a href="#projets">projets</a>
+            <a href="#portfolio">projets</a>
           </li>
           <li>
             <a href="#contact">contact</a>
@@ -81,7 +115,7 @@
             <a href="login.html">login</a>
           </li>
           <li>
-            <a href="http://instagram.com" target="_blank">
+            <a href="http://instagram.com" target="_blank"><!--ajouter le lien direct au compte de Sophie-->
               <img src="./assets/icons/instagram.png" alt="Instagram" />
             </a>
           </li>
@@ -95,7 +129,7 @@
         <figure>
           <img src="./assets/images/sophie-bluel.png" alt="" />
           <!-- hidden avant connexion-->
-          <div id="modifierSophie" class="jsedition" hidden>
+          <div id="modifierSophie" class="jsEdition" style="display: none;">
             <i class="fa-regular fa-pen-to-square"></i>
             <a href="#modal1">modifier</a>
           </div>
@@ -124,7 +158,7 @@
       <section id="portfolio">
         <h2>Mes Projets</h2>
         <!-- hidden avant connexion-->
-        <div id="modifierProjets" class="jsedition" hidden>
+        <div id="modifierProjets" class="jsEdition" style="display: none;"><!--placer a coté de mes projets-->
           <i class="fa-regular fa-pen-to-square"></i>
           <a href="#modal1">modifier</a>
         </div>
@@ -148,21 +182,10 @@
           <label for="name">Nom</label>
           <input type="text" name="name" id="name" placeholder="ex: Omer" />
           <label for="email">E-mail</label>
-          <input
-            type="email"
-            required
-            name="email"
-            id="email"
-            maxlength="128"
-            placeholder="ex: omer.simpson@springfield.com"
+          <input type="email" required name="email" id="email" maxlength="128" placeholder="ex: omer.simpson@springfield.com"
           />
           <label for="message">Message</label>
-          <textarea
-            name="message"
-            id="message"
-            cols="30"
-            rows="10"
-            placeholder="Quel est ta requête ?"
+          <textarea name="message" id="message" cols="30" rows="10" placeholder="Quel est ta requête ?"
           ></textarea>
           <input class="envoiContact" type="submit" value="Envoyer" />
         </form>
@@ -172,7 +195,7 @@
     <footer>
       <nav>
         <ul>
-          <li>Mentions Légales</li>
+          <a href="#"><li>Mentions Légales</li></a>
         </ul>
       </nav>
     </footer>
