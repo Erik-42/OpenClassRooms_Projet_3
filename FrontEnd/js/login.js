@@ -1,4 +1,5 @@
 //sessionStorage.clear();
+
 const loginForm = document.getElementById("loginForm");
 const connect = document.getElementById("connect");
 const email = document.getElementById("email");
@@ -30,7 +31,7 @@ loginForm.addEventListener("submit", async (event) => {
   if (data.token == null) {
     alert("User " + login.statusText);
   } else {
-    //let token = window.sessionStorage.getItem(data.token);
+    let token = window.sessionStorage.getItem(data.token);
 
     const edition = function () {
       window.location.href = "./index.html#modal1";
