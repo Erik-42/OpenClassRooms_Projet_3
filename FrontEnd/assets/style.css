@@ -116,7 +116,7 @@ li:hover {
   font-weight: 700;
 }
 
-/* Presentation */
+/* Presentation Sophie*/
 #introduction {
   display: flex;
   align-items: center;
@@ -155,7 +155,7 @@ li:hover {
   padding: 20px;
 }
 
-/* Portfolio*/
+/* Portfolio */
 #portfolio h2 {
   text-align: center;
   margin-bottom: 1em;
@@ -173,7 +173,7 @@ li:hover {
   width: 100%;
 }
 
-/* formulaires */
+/* Les formulaires */
 #contact,
 #pass,
 #ajout {
@@ -266,7 +266,7 @@ input[type="submit"]:hover {
   background-color: #0e2f28;
 }
 
-/* Modale ajout photo*/
+/* Modale2 ajout photo*/
 #cadreBleu {
   width: 420px;
   height: 169px;
@@ -314,19 +314,13 @@ input[type="submit"]:hover {
   justify-content: center;
 }
 
-#validerAjoutPhoto {
+.ajoutPhoto {
   font-family: "Work Sans";
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
-  text-align: center;
-  color: #000000;
-  background: #a7a7a7;
-  border-radius: 60px;
-  border: black solid 2px;
-  width: 237px;
-  height: 36px;
-  margin: 10px;
+  min-width: 237px;
+  max-height: 36px;
 }
 
 /* Filtres */
@@ -401,6 +395,11 @@ footer nav ul {
 * {
   box-sizing: border-box;
 }
+
+*:focus {
+  box-shadow: 0 0 10px blue; /*a enlever en prod*/
+}
+
 /* Modale 1 */
 /* gallerie modale*/
 .galleryModal {
@@ -409,8 +408,6 @@ footer nav ul {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
-  /*margin-top:  50px;
-	margin-bottom: 50px;*/
   padding: 50px;
 }
 
@@ -428,24 +425,6 @@ footer nav ul {
   border: 1px solid #b3b3b3;
   margin-top: 50px;
   margin-bottom: 30px;
-}
-
-/* bouton ajout photo*/
-.ajoutPhoto {
-  font-family: "Syne";
-  font-weight: 700;
-  color: white;
-  background-color: #1d6154;
-  margin: 2em auto;
-  width: 180px;
-  text-align: center;
-  border-radius: 60px;
-  height: 50px;
-}
-
-.ajoutPhoto:hover {
-  background-color: #1d6154;
-  color: white;
 }
 
 /* suppression galerie*/
@@ -475,7 +454,7 @@ footer nav ul {
   /*height: auto;*/
   max-width: calc(100vw - 20px);
   max-height: calc(100vh - 20px);
-  padding: 20px;
+  padding: 20px; /*Todo A modifier*/
   background-color: #fff;
   text-align: center;
   border-radius: 10px;
@@ -498,14 +477,13 @@ footer nav ul {
 
 .modal[aria-hidden="true"] {
   animation-name: fadeout;
+  /* animation-direction: reverse; */ /* autre methode reverse */
 }
 
-.modal[aria-hidden="true"],
-.modal-wrapper {
+.modal[aria-hidden="true"] .modal-wrapper {
   animation-name: slideToBottom;
+  /* animation-direction: reverse; */ /* autre methode reverse */
 }
-
-/* modale 2 */
 
 /* animation CSS*/
 @keyframes fadeIn {

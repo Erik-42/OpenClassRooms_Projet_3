@@ -1,19 +1,12 @@
 //sessionStorage.clear;
-
-// recup du token dans le session storage
 let token = window.sessionStorage.getItem("token");
-//Récupération des fiches eventuellement stockées dans le sessionStorage
-let fiches = window.sessionStorage.getItem("fiches");
 
-console.log(token);
+//Récupération des fichesGalerie eventuellement stockées dans le sessionStorage
+let fichesGalerie = window.sessionStorage.getItem("fichesGalerie");
 
-// deconnexion
-/*const deconnect = function (e) {
-e.preventDefault()
-if (data.token !== null) {
-   deconnect.document.getElementById("btnChange");
-    deconnect.addEventListener("click", window.sessionStorage.clear());
-}*/
+//bouton ouverture modal1
+/*let btnModal = document.getElementById("btnModal");
+btnModal.addEventListener("click", openModal);*/
 
 if (token) {
   let jsEdition = document.querySelectorAll(".jsEdition");
@@ -22,30 +15,34 @@ if (token) {
   }
   document.getElementById("filtres").style.display = "none";
 }
-// Fiches stockées en local
-if (fiches === null) {
-  // Récupération des fiches depuis le fichier JSON
-  //const askApi = await fetch("./js/works.json");
-  const askApi = await fetch("http://localhost:5678/api/works");
-  fiches = await askApi.json();
 
-  // Transformation des fiches en JSON
-  const valeurFiches = JSON.stringify(fiches);
-  // Stockage des informations dans le sessionStorage
-  window.sessionStorage.setItem("fiches", valeurFiches);
-} else {
-  fiches = JSON.parse(fiches);
+// Fiches stockées en local
+async function getData() {
+  if (fichesGalerie === null) {
+    // Récupération des fichesGalerie depuis API
+    const askApi = await fetch("./js/works.json");
+    //const askApi = await fetch("http://localhost:5678/api/works");
+    fichesGalerie = await askApi.json();
+
+    // Transformation des fichesGalerie en JSON
+    const valeurFiches = JSON.stringify(fichesGalerie);
+    // Stockage des informations dans le sessionStorage
+    window.sessionStorage.setItem("fichesGalerie", valeurFiches);
+  } else {
+    fichesGalerie = JSON.parse(fichesGalerie);
+  }
 }
 
+getData();
+
 // Création des balises
-function genererFiches(fiches) {
-  for (let i = 0; i < fiches.length; i++) {
-    const works = fiches[i];
+function genererFiches(fichesGalerie) {
+  for (let i = 0; i < fichesGalerie.length; i++) {
+    const works = fichesGalerie[i];
 
-    // Récupération de l'élément du DOM qui accueillera les fiches
+    // Récupération de l'élément du DOM qui accueillera les fichesGalerie
     const divGallery = document.querySelector(".gallery");
-
-    //création de la balise pour les fiches - balise<figure>
+    //création de la balise pour les fichesGalerie - balise<figure>
     const ficheElement = document.createElement("figure");
     //Création des balises
     const imageElement = document.createElement("img");
@@ -55,15 +52,14 @@ function genererFiches(fiches) {
 
     // On rattache la balise article a la div gallery
     divGallery.appendChild(ficheElement);
-
     //Rattachement de nos balises au DOM
     ficheElement.appendChild(imageElement);
     ficheElement.appendChild(titleElement);
   }
 }
 
-//Création des fiches
-genererFiches(fiches);
+//Création des fichesGalerie
+genererFiches(fichesGalerie);
 
 //Filtres
 //ToDo améliorer code des filtres
@@ -71,7 +67,7 @@ genererFiches(fiches);
 const btnall = document.querySelector(".btnall");
 
 btnall.addEventListener("click", function () {
-  const filtresFiches = fiches.filter(function (filtres) {
+  const filtresFiches = fichesGalerie.filter(function (filtres) {
     return filtres.category;
   });
   //console.log(filtresFiches);
@@ -82,7 +78,7 @@ btnall.addEventListener("click", function () {
 const btnobjets = document.querySelector(".btnobjets");
 
 btnobjets.addEventListener("click", function () {
-  const filtresFiches = fiches.filter(function (filtres) {
+  const filtresFiches = fichesGalerie.filter(function (filtres) {
     return filtres.category.id == 1;
   });
   //console.log(filtresFiches);
@@ -93,7 +89,7 @@ btnobjets.addEventListener("click", function () {
 const btnappart = document.querySelector(".btnappart");
 
 btnappart.addEventListener("click", function () {
-  const filtresFiches = fiches.filter(function (filtres) {
+  const filtresFiches = fichesGalerie.filter(function (filtres) {
     return filtres.category.id == 2;
   });
   //console.log(filtresFiches);
@@ -104,7 +100,7 @@ btnappart.addEventListener("click", function () {
 const btnhotels = document.querySelector(".btnhotels");
 
 btnhotels.addEventListener("click", function () {
-  const filtresFiches = fiches.filter(function (filtres) {
+  const filtresFiches = fichesGalerie.filter(function (filtres) {
     return filtres.category.id == 3;
   });
   //console.log(filtresFiches);

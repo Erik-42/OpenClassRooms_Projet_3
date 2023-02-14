@@ -1,109 +1,121 @@
 // gestion de la modale
-let modal = null;
+let modal1 = null;
+let modal2 = null;
 const focusableSelector = "button, a, input, textarea";
 let focusables = [];
 let previouslyFocusElement = null;
 
-// ouverture de la modale
-const openModal = async function (e) {
+// ouverture de la modale1
+const openModal = function (e) {
   e.preventDefault();
-  const target = e.target.getAttribute("href");
-  if (target.startsWidth("#")) {
-    modal = document.querySelector(target);
-  } else {
-    modal = await loadModal(target);
-  }
-  //modal = document.querySelector(e.target.getAttribute("href"));
-  focusables = Array.from(modal.querySelectorAll(focusableSelector));
+  modal1 = document.querySelector(e.target.getAttribute("href"));
+  focusables = Array.from(modal1.querySelectorAll(focusableSelector));
   previouslyFocusElement = document.querySelector(":focus");
-  modal.style.display = null;
-  modal.removeAttribute("aria-hidden");
-  modal.setAttribute("aria-modal", "true");
-  modal.addEventListener("click", clodeModal);
-  modal.querySelector(".jsModalClose").addEventListener("click,");
-  modal.querySelector(".jsModalStop").addEventListener("click");
+  modal1.style.display = null;
+  focusables[0].focus();
+  modal1.removeAttribute("aria-hidden");
+  modal1.setAttribute("aria-modal", "true");
+  modal1.addEventListener("click", closeModal);
+  modal1.querySelector(".jsCloseModal").addEventListener("click", closeModal);
+  /*modal1.querySelector(".jsModalStop").addEventListener("click", stopEvent);*/
 };
 
-// fermeture de la modal
+// fermeture des modales
 const closeModal = function (e) {
-  if (modal === null) return;
+  if (modal1 === null) return;
   if (previouslyFocusElement !== null) previouslyFocusElement;
   e.preventDefault();
-  modal.setAttribut("aria-hidden", "true");
-  modal.removeAttribute("aria-modal");
-  modal.removeEventListener("click", clodeModal);
-  modal.querySelector(".jsModalClose").removeEventListener("click", closeModal);
-  modal.querySelector(".jsModalStop").removeEventListener("click", stopEvent);
-  const hideModal = function () {
-    modal.style.display = "none";
-    modal.removeEventListener("animationend", hideModal);
-    modal = null;
-  };
-  modal.addEventListener("animationend", hideModal);
+  /* autre methode animation reverse 
+  modal1.style.display = "none";
+  modal1.offsetWidth;
+  modal1.style.display = null;
+  */
+  window.setTimeout(function () {
+    modal1.style.display = "none";
+    modal1 = null;
+  }, 500);
+  modal1.removeAttribute("aria-hidden");
+  modal1.removeAttribute("aria-modal");
+  modal1.removeEventListener("click", closeModal);
+  modal1
+    .querySelector(".jsCloseModal")
+    .removeEventListener("click", closeModal);
+  modal1.querySelector(".jsModalStop").removeEventListener("click", stopEvent);
+  /* autre methode de fermeture
+  const hide
+    modal1.addEventListener('animationend', function() {
+      modal1.style.display = "none";
+      modal1 = null;
+    })
+    */
 };
 
-const loadModal = async function (url) {
-  const html = await fetch(url).then((reponse) => reponse.text());
-  //console.log(html);
-};
+// bloque evenement
 const stopEvent = function (e) {
   e.stopEvent();
 };
 
+//focus dans la modale
 const focusInModal = function (e) {
   e.preventDefault();
-  let index = focusables.findIndex((f) => f === modal.querySelector(":focus"));
+  let index = focusables.findIndex((f) => f === modal1.querySelector(":focus"));
   index++;
   if (index >= focusables.length) {
     index = 0;
   }
+  if (index < 0) {
+    index = focusables.length - 1;
+  }
   focusables[index].focus();
 };
 
-document.querySelectorAll(".jsedition").forEach((a) => {
+// lien pour ouvrir la modal1
+document.querySelectorAll(".jsModifier").forEach((a) => {
   a.addEventListener("click", openModal);
 });
 
+// gestion touche escape
 window.addEventListener("keydown", function (e) {
-  console.log(e.key);
   if (e.key === "Escape" || e.key === "Esc") {
-    window.location.href = "./index.html";
+    closeModal(e);
   }
-  if (e.key === "Tab" && modal !== null) {
+  if (e.key === "Tab" && modal1 !== null) {
     focusInModal(e);
   }
 });
 
-// preview image
+// Changement de modal1 1 => 2
+//document.getElementById("modal2").addEventListener("click", openModal2);
 
-const choixImage = document.getElementById("ajouterPhoto");
-const imgPreview = document.getElementById("cadreBleu");
-
-ajouterPhoto.addEventListener("change", function () {
-  getImgData();
-});
-
-function getImgData() {
-  const files = ajouterPhoto.files[0];
-  if (files) {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(files);
-    fileReader.addEventListener("load", function () {
-      imgPreview.style.display = "block";
-      imgPreview.innerHTML = '<img src="' + this.result + '" />';
-    });
-  }
-}
+// ouverture de la modale2
+const openModal2 = function (e) {
+  if (modal2 === null) return;
+  if (previouslyFocusElement !== null) previouslyFocusElement;
+  e.preventDefault();
+  modal2 = document.querySelector(e.target.getElementById("ajoutPhoto"));
+  /*focusables = Array.from(modal2.querySelectorAll(focusableSelector));
+  previouslyFocusElement = document.querySelector(":focus");*/
+  modal1.style.display = "none";
+  modal2.style.display = null;
+  focusables[0].focus();
+  modal2.removeAttribute("aria-hidden");
+  modal2.setAttribute("aria-modal", "true");
+  modal2.addEventListener("click", closeModal);
+  modal2.querySelector(".jsCloseModal").addEventListener("click", closeModal);
+  /*modal1.querySelector(".jsModalStop").addEventListener("click", stopEvent);*/
+};
 
 //galerie Modal1
-//Récupération des fiches eventuellement stockées dans le sessionStorage
+// Todo reutiliser la galerie de main.js et ajouter les icones
+
+// Récupération des fiches eventuellement stockées dans le sessionStorage
 let fiches = window.sessionStorage.getItem("fiches");
 
 // Fiches stockées en local
 if (fiches === null) {
   // Récupération des fiches depuis le files JSON
-  const askApi = await fetch("./js/works.json");
-  //const askApi = await fetch("http://localhost:5678/api/works");
+  //const askApi = await fetch("./js/works.json");
+  const askApi = await fetch("http://localhost:5678/api/works");
   fiches = await askApi.json();
 
   // Transformation des fiches en JSON
@@ -127,10 +139,21 @@ function genererFiches(fiches) {
     //Création des balises
     const imageElement = document.createElement("img");
     imageElement.src = works.imageUrl;
-    const trash = document.createElement("i");
-    trash.icon = "fa-light fa-trash-can";
-    /*const titleElement = document.createElement("figcaption");
-    titleElement.innerText = works.title;*/
+    /*function addTrash() {
+      const trash = document.createElement("i");
+      class ExpandingList extends HTMLAllCollection {
+        constructor() {
+          super();
+        }
+      }
+      customElements.define("fa-light fa-trash-can", ExpandingList, {
+        extends: "class",
+      });
+      let ExpandingList = document.createElement("class", {
+        is: "fa-light fa-trash-can",
+      });
+      trash.icon = "fa-light fa-trash-can";
+    }*/
     const editer = document.createElement("a");
     editer.innerText = "editer";
     window.location.href = "#";
@@ -140,9 +163,30 @@ function genererFiches(fiches) {
 
     //Rattachement de nos balises au DOM
     ficheElement.appendChild(imageElement);
-    //ficheElement.appendChild(titleElement);
+    //ficheElement.appendChild(trash);
     ficheElement.appendChild(editer);
   }
 }
 //Création des fiches
 genererFiches(fiches);
+
+// Modal2
+// preview image modal2
+const choixImage = document.getElementById("ajouterPhoto");
+const imgPreview = document.getElementById("cadreBleu");
+
+ajouterPhoto.addEventListener("change", function () {
+  getImgData();
+});
+
+function getImgData() {
+  const files = ajouterPhoto.files[0];
+  if (files) {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(files);
+    fileReader.addEventListener("load", function () {
+      imgPreview.style.display = "block";
+      imgPreview.innerHTML = '<img src="' + this.result + '" />';
+    });
+  }
+}

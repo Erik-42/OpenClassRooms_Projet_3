@@ -16,59 +16,63 @@
       src="https://kit.fontawesome.com/4ec6d39a0c.js"
       crossorigin="anonymous"
     ></script>
-    <script type="module" src="./js/main.js"></script>
-    <script type="module" src="./js/login.js"></script>
     <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/main.js"></script>
+    
   </head>
 
   <body>
     <!--Barre noir-->
-    <!--faire apparaitre à la connexion de la page login style="display: none" a modifier en js-->
-    <form id="maskBarre" class="jsEdition" style="display: none;">
+       <form id="maskBarre" class="jsEdition" style="display: none;"  >
       <i class="fa-regular fa-pen-to-square"></i>
       <p>Mode édition</p>
+      <a href="">
       <input id="btnChange" type="button" value="publier les changements" />
-      <a href="#modal1"style="color: aliceblue">ouvrir boite modal</a>
+      </a>
+      <a href="#modal1" class="jsModifier" style="color: aliceblue">ouvrir boite modal</a>
     </form>
+
     <!--modale 1-->
-    <!--faire apparaitre si click sur modifier-->
+    <!--Todo faire apparaitre si click sur modifier-->
     <aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal" style="display: none;"><!--ajouter un style="display: none" a modifier en js si click btn ajouter photo-->
-      <div class="modal-wrapper">
-        <div class="navModal">
-          <i class="fa-solid fa-arrow-left" style="color: white;"></i>
-          <a href="./index.html" class="fa-solid fa-xmark"></a>
-        </div><!--ajouter procédure de fermeture simple des modal-->
+      <div class="modal-wrapper jsModalStop">
+        <nav class="navModal">
+          <i class="fa-solid fa-arrow-left " style="color: white;"></i>
+          <a href="#" class="fa-solid fa-xmark jsCloseModal"></a>
+        </nav>
+        
         <h1 id="titleModal">Galerie photo</h1>
-        <!--galerie modale--><!--appeler la galerie de la page index et y ajouter les icones-->
-        <div class="galleryModal"></div>
+        <!--galerie modale--><!--Todo appeler la galerie de la page index et y ajouter les icones-->
+        <section class="galleryModal"></section>
         <!--formulaire ajout photo-->
         <form>
           <!--ligne de séparation-->
           <p class="line"></p>
-          <input class="ajoutPhoto" type="submit" accept=".jpg,.jpeg,.png,.tiff" value="Ajouter une photo"/>
+          <input id="ajoutPhoto" class="ajoutPhoto" type="submit" accept=".jpg,.jpeg,.png,.tiff" value="Ajouter une photo"/>
         </form>
-        <!--ajouter fenetre de confirmation de suppression-->
+        <!--TOdo ajouter fenetre de confirmation de suppression-->
         <a class="supp" href="#">supprimer la galerie</a>
       </div>
     </aside>
     <!-- fin modale 1-->
 
     <!--debut modale 2-->
-    <!--faire apparaître si click btn ajouter photo-->
+    <!--Todo faire apparaître si click btn ajouter photo-->
     <aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal" style="display: none;">
       <div class="modal-wrapper">
-        <div class="navModal">
+        <nav class="navModal">
           <!--retour a la modal 1-->
           <a href="#modal1" class="fa-solid fa-arrow-left"></a>
-          <!--fermer la modal--><!--ajouter procédure de fermeture simple des modal-->
-          <a href="./index.html" class="fa-solid fa-xmark"></a>
-        </div>
+          <!--fermer la modal-->
+          <!--Todo ajouter procédure de fermeture simple des modal-->
+          <a href="#" class="fa-solid fa-xmark jsCloseModal"></a>
+        </nav>
         
         <section id="ajout">
           <h1 id="titleModal">Ajout photo</h1>          
           <form class="insertPhotos" method="post" enctype="multipart/form-data">
             <!--Cadre ajout photos-->
-            <div id="cadreBleu" class="preview">
+            <section id="cadreBleu" class="preview">
                 <img class="iconPicture" src="./assets/icons/picture.png" alt="picture"></img>
                   
                   <label id="btnAjoutPhoto" for="ajouterPhoto">+ Ajouter photo
@@ -76,7 +80,7 @@
                   </label>
                   
                 <p>jpg, png : 4mo max</p>
-            </div>
+            </section>
             <!--formulaire ajout photo-->
             <label for="titre">Titre</label>
             <input type="text" name="titre" id="titrePhoto" placeholder="ex: Salon"/><!--ajouter un required-->
@@ -115,7 +119,7 @@
             <a href="login.html">login</a>
           </li>
           <li>
-            <a href="http://instagram.com" target="_blank"><!--ajouter le lien direct au compte de Sophie-->
+            <a href="http://instagram.com" target="_blank"><!--Todo ajouter le lien direct au compte de Sophie-->
               <img src="./assets/icons/instagram.png" alt="Instagram" />
             </a>
           </li>
@@ -128,10 +132,10 @@
       <section id="introduction">
         <figure>
           <img src="./assets/images/sophie-bluel.png" alt="" />
-          <!-- hidden avant connexion-->
+          
           <div id="modifierSophie" class="jsEdition" style="display: none;">
             <i class="fa-regular fa-pen-to-square"></i>
-            <a href="#modal1">modifier</a>
+            <a class="jsModifier" href="#modal1">modifier</a>
           </div>
         </figure>
         <article>
@@ -157,12 +161,13 @@
       <!--boutons des filtres-->
       <section id="portfolio">
         <h2>Mes Projets</h2>
-        <!-- hidden avant connexion-->
-        <div id="modifierProjets" class="jsEdition" style="display: none;"><!--placer a coté de mes projets-->
+        
+        <div id="modifierProjets" class="jsEdition" style="display: none;">
+          <!--Todo placer a coté de mes projets-->
           <i class="fa-regular fa-pen-to-square"></i>
-          <a href="#modal1">modifier</a>
+          <a class="jsModifier" href="#modal1">modifier</a>
         </div>
-        <!-- faire disparaitre a la connexion-->
+        <!--Todo faire disparaitre a la connexion-->
         <div id="filtres" class="editionBtn" style="display: null">
           <input class="btnall" type="button" value="Tous" />
           <input class="btnobjets" type="button" value="Objets" />
