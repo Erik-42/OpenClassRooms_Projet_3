@@ -73,18 +73,17 @@ window.addEventListener("keydown", function (e) {
     focusInModal(e);
   }
 });
-
+// modal 2
 // preview image
-
-const choixImage = document.getElementById("ajouterPhoto");
+const choixImage = document.getElementById("btnAjouterPhoto");
 const imgPreview = document.getElementById("cadreBleu");
 
-ajouterPhoto.addEventListener("change", function () {
+btnAjouterPhoto.addEventListener("change", function () {
   getImgData();
 });
 
 function getImgData() {
-  const files = ajouterPhoto.files[0];
+  const files = btnAjouterPhoto.files[0];
   if (files) {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(files);

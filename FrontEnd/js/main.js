@@ -4,16 +4,9 @@
 let token = window.sessionStorage.getItem("token");
 //Récupération des fiches eventuellement stockées dans le sessionStorage
 let fiches = window.sessionStorage.getItem("fiches");
+const deconnect = document.getElementById("btnChange");
 
 console.log(token);
-
-// deconnexion
-/*const deconnect = function (e) {
-e.preventDefault()
-if (data.token !== null) {
-   deconnect.document.getElementById("btnChange");
-    deconnect.addEventListener("click", window.sessionStorage.clear());
-}*/
 
 if (token) {
   let jsEdition = document.querySelectorAll(".jsEdition");
@@ -110,4 +103,9 @@ btnhotels.addEventListener("click", function () {
   //console.log(filtresFiches);
   document.querySelector(".gallery").innerHTML = "";
   genererFiches(filtresFiches);
+});
+
+// deconnexion
+deconnect.addEventListener("click", (event) => {
+  window.sessionStorage.clear();
 });

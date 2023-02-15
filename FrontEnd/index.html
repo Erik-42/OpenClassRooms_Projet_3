@@ -48,7 +48,12 @@
         <form>
           <!--ligne de séparation-->
           <p class="line"></p>
-          <input id="ajoutPhoto" class="ajoutPhoto" type="submit" accept=".jpg,.jpeg,.png,.tiff" value="Ajouter une photo"/>
+
+          <a href="#modal2" class="jsModifier">ouvrir modal 2 en ajax</a>
+          
+          <a href="#modal2" class="jsModifier">
+            <input id="ajoutPhoto" class="ajoutPhoto" type="submit" value="Ajouter une photo"/>
+          </a>
         </form>
         <!--TOdo ajouter fenetre de confirmation de suppression-->
         <a class="supp" href="#">supprimer la galerie</a>
@@ -74,7 +79,7 @@
             <!--Cadre ajout photos-->
             <section id="cadreBleu" class="preview">
                 <img class="iconPicture" src="./assets/icons/picture.png" alt="picture"></img>
-                  
+                  <!--Todo Prevoir une animation du btn ajouterPhoto-->
                   <label id="btnAjoutPhoto" for="ajouterPhoto">+ Ajouter photo
                     <input id="ajouterPhoto" class="ajouterPhoto" type="file" name="ajouterPhoto" accept=".jpg, .png" value="+ Ajouter photo"/>
                   </label>

@@ -6,13 +6,19 @@ let focusables = [];
 let previouslyFocusElement = null;
 
 // ouverture de la modale1
-const openModal = function (e) {
+const openModal = async function (e) {
   e.preventDefault();
-  modal1 = document.querySelector(e.target.getAttribute("href"));
-  focusables = Array.from(modal1.querySelectorAll(focusableSelector));
+  const target = e.target.getAttribute("href");
+  if (target.startsWith("#")) {
+    modal1 = document.querySelector(target);
+  } else {
+    modal1 = await loadModal(target);
+  }
+
+  //focusables = Array.from(modal1.querySelectorAll(focusableSelector));
   previouslyFocusElement = document.querySelector(":focus");
   modal1.style.display = null;
-  focusables[0].focus();
+  //focusables[0].focus();
   modal1.removeAttribute("aria-hidden");
   modal1.setAttribute("aria-modal", "true");
   modal1.addEventListener("click", closeModal);
@@ -40,7 +46,7 @@ const closeModal = function (e) {
   modal1
     .querySelector(".jsCloseModal")
     .removeEventListener("click", closeModal);
-  modal1.querySelector(".jsModalStop").removeEventListener("click", stopEvent);
+  //modal1.querySelector(".jsModalStop").removeEventListener("click", stopEvent);
   /* autre methode de fermeture
   const hide
     modal1.addEventListener('animationend', function() {
@@ -83,27 +89,6 @@ window.addEventListener("keydown", function (e) {
     focusInModal(e);
   }
 });
-
-// Changement de modal1 1 => 2
-//document.getElementById("modal2").addEventListener("click", openModal2);
-
-// ouverture de la modale2
-const openModal2 = function (e) {
-  if (modal2 === null) return;
-  if (previouslyFocusElement !== null) previouslyFocusElement;
-  e.preventDefault();
-  modal2 = document.querySelector(e.target.getElementById("ajoutPhoto"));
-  /*focusables = Array.from(modal2.querySelectorAll(focusableSelector));
-  previouslyFocusElement = document.querySelector(":focus");*/
-  modal1.style.display = "none";
-  modal2.style.display = null;
-  focusables[0].focus();
-  modal2.removeAttribute("aria-hidden");
-  modal2.setAttribute("aria-modal", "true");
-  modal2.addEventListener("click", closeModal);
-  modal2.querySelector(".jsCloseModal").addEventListener("click", closeModal);
-  /*modal1.querySelector(".jsModalStop").addEventListener("click", stopEvent);*/
-};
 
 //galerie Modal1
 // Todo reutiliser la galerie de main.js et ajouter les icones
@@ -170,17 +155,34 @@ function genererFiches(fiches) {
 //Création des fiches
 genererFiches(fiches);
 
-// Modal2
-// preview image modal2
-const choixImage = document.getElementById("ajouterPhoto");
+// Changement de modal1 1 => 2
+const loadModal = async function (url) {
+  const target = "#" + url.split("#")[1];
+  const html = await fetch(url).then((reponse) => reponse.text());
+  const element = document
+    .createRange()
+    .createContextualFragment(html)
+    .querySelector(target);
+  //modal1 = style.display = "none";
+  if (element === null)
+    throw "Lelement ${target} na pas été trouvé dans la page ${url}";
+  document.body.append(element);
+  return element;
+
+  console.log(element);
+};
+
+// modal 2
+// preview image
+const choixImage = document.getElementById("btnAjouterPhoto");
 const imgPreview = document.getElementById("cadreBleu");
 
-ajouterPhoto.addEventListener("change", function () {
+btnAjouterPhoto.addEventListener("change", function () {
   getImgData();
 });
 
 function getImgData() {
-  const files = ajouterPhoto.files[0];
+  const files = btnAjouterPhoto.files[0];
   if (files) {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(files);

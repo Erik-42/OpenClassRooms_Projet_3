@@ -18,7 +18,7 @@
     ></script>
     <!--<script type="module" src="./js/main.js"></script>
     <script type="module" src="./js/login.js"></script>-->
-    <script type="module" src="./js/app2.js"></script>
+    <script type="module" src="./js/app.js"></script>
   </head>
 
 <body>
@@ -29,11 +29,11 @@
   </header>
     <!--modale 2-->
     <!--faire apparaître si ajout photo-->
-    <aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal">
+    <aside id="modal2" class="modal" aria-hidden="false" role="dialog" aria-labelledby="titleModal">
       <div class="modal-wrapper">
         <div class="navModal">
           <a href="./index.html#modal1" class="fa-solid fa-arrow-left"></a>
-          <a href="./index.html" class="fa-solid fa-xmark"></a>
+          <a href="./index.html" class="fa-solid fa-xmark jsCloseModal"></a>
         </div>
         
         <section id="ajout">
@@ -43,8 +43,8 @@
             <div id="cadreBleu" class="preview">
                 <img class="iconPicture" src="./assets/icons/picture.png" alt="picture"></img>
                   
-                  <label id="btnAjoutPhoto" for="ajouterPhoto">+ Ajouter photo
-                    <input id="ajouterPhoto" class="ajouterPhoto" type="file" name="ajouterPhoto" accept=".jpg, .png" value="+ Ajouter photo"/>
+                  <label id="btnAjoutPhoto" for="btnAjouterPhoto">+ Ajouter photo
+                    <input id="btnAjouterPhoto" class="btnAjouterPhoto" type="file" name="btnAjouterPhoto" accept=".jpg, .png" value="+ Ajouter photo"/>
                   </label>
                   
                 <p>jpg, png : 4mo max</p>
