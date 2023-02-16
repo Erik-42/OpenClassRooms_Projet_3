@@ -29,19 +29,18 @@
       <a href="">
       <input id="btnChange" type="button" value="publier les changements" />
       </a>
-      <a href="#modal1" class="jsModifier" style="color: aliceblue">ouvrir boite modal</a>
+      
     </form>
 
     <!--modale 1-->
     <!--Todo faire apparaitre si click sur modifier-->
-    <aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal" style="display: none;"><!--ajouter un style="display: none" a modifier en js si click btn ajouter photo-->
+    <aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal1" style="display: none;"><!--ajouter un style="display: none" a modifier en js si click btn ajouter photo-->
       <div class="modal-wrapper jsModalStop">
         <nav class="navModal">
-          <i class="fa-solid fa-arrow-left " style="color: white;"></i>
-          <a href="#" class="fa-solid fa-xmark jsCloseModal"></a>
+          <i class="fa-solid fa-arrow-left" style="color: white;"></i>
+          <button class="fa-solid fa-xmark jsCloseModal"></button>
         </nav>
-        
-        <h1 id="titleModal">Galerie photo</h1>
+        <h1 id="titleModal1">Galerie photo</h1>
         <!--galerie modale--><!--Todo appeler la galerie de la page index et y ajouter les icones-->
         <section class="galleryModal"></section>
         <!--formulaire ajout photo-->
@@ -49,10 +48,9 @@
           <!--ligne de séparation-->
           <p class="line"></p>
 
-          <a href="#modal2" class="jsModifier">ouvrir modal 2 en ajax</a>
-          
+          <!--<a href="#modal2" class="jsModifier">ouvrir modal 2 en ajax</a>-->
           <a href="#modal2" class="jsModifier">
-            <input id="ajoutPhoto" class="ajoutPhoto" type="submit" value="Ajouter une photo"/>
+            <input id="btnAjouterPhotoModal1" class="btnAjouterPhotoModal1" type="submit" value="Ajouter une photo"/>
           </a>
         </form>
         <!--TOdo ajouter fenetre de confirmation de suppression-->
@@ -63,18 +61,17 @@
 
     <!--debut modale 2-->
     <!--Todo faire apparaître si click btn ajouter photo-->
-    <aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal" style="display: none;">
-      <div class="modal-wrapper">
+    <aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal2" style="display: none;">
+      <div class="modal-wrapper jsModalStop">
         <nav class="navModal">
           <!--retour a la modal 1-->
           <a href="#modal1" class="fa-solid fa-arrow-left"></a>
           <!--fermer la modal-->
           <!--Todo ajouter procédure de fermeture simple des modal-->
-          <a href="#" class="fa-solid fa-xmark jsCloseModal"></a>
+          <button class="fa-solid fa-xmark jsCloseModal"></button>
         </nav>
-        
         <section id="ajout">
-          <h1 id="titleModal">Ajout photo</h1>          
+          <h1 id="titleModal2">Ajout photo</h1>          
           <form class="insertPhotos" method="post" enctype="multipart/form-data">
             <!--Cadre ajout photos-->
             <section id="cadreBleu" class="preview">
@@ -165,12 +162,13 @@
 
       <!--boutons des filtres-->
       <section id="portfolio">
+        <div class="projets">
         <h2>Mes Projets</h2>
-        
         <div id="modifierProjets" class="jsEdition" style="display: none;">
           <!--Todo placer a coté de mes projets-->
           <i class="fa-regular fa-pen-to-square"></i>
           <a class="jsModifier" href="#modal1">modifier</a>
+        </div>
         </div>
         <!--Todo faire disparaitre a la connexion-->
         <div id="filtres" class="editionBtn" style="display: null">

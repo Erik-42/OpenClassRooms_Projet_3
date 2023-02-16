@@ -1,12 +1,20 @@
-// gestion de la modale
+// Récupération des fiches eventuellement stockées dans le sessionStorage
+let fiches = window.sessionStorage.getItem("fiches");
+
+// gestion des modales
+//modal1
 let modal1 = null;
-let modal2 = null;
+//focus pour tab
 const focusableSelector = "button, a, input, textarea";
 let focusables = [];
 let previouslyFocusElement = null;
+//modal2
+//let modal2 = null;
+const choixImage = document.getElementById("btnAjouterPhoto");
+const imgPreview = document.getElementById("cadreBleu");
 
 // ouverture de la modale1
-const openModal = async function (e) {
+const openModal1 = async function (e) {
   e.preventDefault();
   const target = e.target.getAttribute("href");
   if (target.startsWith("#")) {
@@ -14,7 +22,6 @@ const openModal = async function (e) {
   } else {
     modal1 = await loadModal(target);
   }
-
   //focusables = Array.from(modal1.querySelectorAll(focusableSelector));
   previouslyFocusElement = document.querySelector(":focus");
   modal1.style.display = null;
@@ -23,7 +30,7 @@ const openModal = async function (e) {
   modal1.setAttribute("aria-modal", "true");
   modal1.addEventListener("click", closeModal);
   modal1.querySelector(".jsCloseModal").addEventListener("click", closeModal);
-  /*modal1.querySelector(".jsModalStop").addEventListener("click", stopEvent);*/
+  //modal1.querySelector(".jsModalStop").addEventListener("click", stopEvent);
 };
 
 // fermeture des modales
@@ -77,7 +84,7 @@ const focusInModal = function (e) {
 
 // lien pour ouvrir la modal1
 document.querySelectorAll(".jsModifier").forEach((a) => {
-  a.addEventListener("click", openModal);
+  a.addEventListener("click", openModal1);
 });
 
 // gestion touche escape
@@ -92,9 +99,6 @@ window.addEventListener("keydown", function (e) {
 
 //galerie Modal1
 // Todo reutiliser la galerie de main.js et ajouter les icones
-
-// Récupération des fiches eventuellement stockées dans le sessionStorage
-let fiches = window.sessionStorage.getItem("fiches");
 
 // Fiches stockées en local
 if (fiches === null) {
@@ -117,7 +121,7 @@ function genererFiches(fiches) {
     const works = fiches[i];
 
     // Récupération de l'élément du DOM qui accueillera les fiches
-    const divGallery = document.querySelector(".galleryModal");
+    const sectionGallery = document.querySelector(".galleryModal");
 
     //création de la balise pour les fiches - balise<figure>
     const ficheElement = document.createElement("figure");
@@ -139,12 +143,12 @@ function genererFiches(fiches) {
       });
       trash.icon = "fa-light fa-trash-can";
     }*/
-    const editer = document.createElement("a");
+    const editer = document.createElement("a", ["href"]);
     editer.innerText = "editer";
-    window.location.href = "#";
+    //window.location.href = "#modal2";
 
     // On rattache la balise article a la div galleryModal
-    divGallery.appendChild(ficheElement);
+    sectionGallery.appendChild(ficheElement);
 
     //Rattachement de nos balises au DOM
     ficheElement.appendChild(imageElement);
@@ -158,14 +162,18 @@ genererFiches(fiches);
 // Changement de modal1 1 => 2
 const loadModal = async function (url) {
   const target = "#" + url.split("#")[1];
+  const existingModal = document.querySelector(target);
+  if (existingModal !== null) return existingModal;
   const html = await fetch(url).then((reponse) => reponse.text());
   const element = document
     .createRange()
     .createContextualFragment(html)
-    .querySelector(target);
+    .querySelector(target)
+    .setAttribute("aria-hidden", "false");
+
   //modal1 = style.display = "none";
   if (element === null)
-    throw "Lelement ${target} na pas été trouvé dans la page ${url}";
+    throw "L'element ${target} na pas été trouvé dans la page ${url}";
   document.body.append(element);
   return element;
 
@@ -174,13 +182,9 @@ const loadModal = async function (url) {
 
 // modal 2
 // preview image
-const choixImage = document.getElementById("btnAjouterPhoto");
-const imgPreview = document.getElementById("cadreBleu");
-
-btnAjouterPhoto.addEventListener("change", function () {
+/*btnAjouterPhoto.addEventListener("change", function () {
   getImgData();
-});
-
+});*/
 function getImgData() {
   const files = btnAjouterPhoto.files[0];
   if (files) {
