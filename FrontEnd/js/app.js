@@ -1,5 +1,7 @@
 // Récupération des fiches eventuellement stockées dans le sessionStorage
 let fiches = window.sessionStorage.getItem("fiches");
+// recup du token dans le session storage
+let token = window.sessionStorage.getItem("token");
 
 // gestion des modales
 //modal1
@@ -14,6 +16,7 @@ let modal2 = null;
 // ouverture de la modale1
 const openModal1 = async function (e) {
 	e.preventDefault();
+	console.log(e.target)
 	const target = e.target.getAttribute("href");
 	if (target.startsWith("#"))/*Todo a voir error*/ {
 		modal1 = document.querySelector(target);
@@ -60,12 +63,12 @@ const closeModal = function (e) {
 			modal1.style.display = "none";
 			modal1 = null;
 		})
-		*/
+	*/
 };
 
 // bloque evenement
 const stopEvent = function (e) {
-	e.stopEvent(); //Todo voir pourquoi error
+	e.stopPropagation(); //Todo voir pourquoi error
 };
 
 //focus dans la modale
@@ -116,7 +119,7 @@ if (fiches === null) {
 }
 
 // Création des balises
-function genererFiches(fiches) {
+function genererFicheModal(fiches) {
 	for (let i = 0; i < fiches.length; i++) {
 		const works = fiches[i];
 
@@ -127,18 +130,18 @@ function genererFiches(fiches) {
 		const ficheElement = document.createElement("figure");
 		// ajout icone trash
 		const iconeContainer = document.createElement("div")
-		iconeContainer.innerHTML = `<i class="fa-sharp fa-solid fa-arrows-up-down-left-right cross"></i>`
-		iconeContainer.innerHTML = `<button class="fa-sharp fa-solid fa-trash-can trash"></button>`
+		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-arrows-up-down-left-right cross"></button>`
+		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-trash-can trash"></button>`
 		//Création des balises
 		const imageElement = document.createElement("img");
 		imageElement.src = works.imageUrl;
 
-		// lien editer //Todo revenir direct sur l'image clicker
+		// lien editer //Todo revenir editer direct sur l'image clicker
 		const editer = document.createElement("a");
 		editer.innerHTML = `<a href="#modal2">editer</a>`
 
 		// On rattache la balise article a la div galleryModal
-		//sectionGallery.appendChild(ficheElement);
+		sectionGallery.appendChild(ficheElement);
 
 		//Rattachement de nos balises au DOM
 		ficheElement.appendChild(imageElement);
@@ -146,7 +149,7 @@ function genererFiches(fiches) {
 	}
 }
 //Création des fiches
-genererFiches(fiches);
+genererFicheModal(fiches);
 
 // Changement de modal1 1 => 2
 const loadModal = async function (url) {
@@ -173,11 +176,11 @@ const loadModal = async function (url) {
 const imgPreview = document.getElementById("cadreBleu");
 const choixImage = document.getElementById("btnAjouterPhoto");
 
-/*
+
 btnAjouterPhoto.addEventListener("change", function () {
 	getImgData();
 });
-*/
+
 function getImgData() {
 	const files = btnAjouterPhoto.files[0];
 	if (files) {
@@ -191,7 +194,7 @@ function getImgData() {
 }
 //Ajout de photo à la galerie
 /*ajouter des message d'erreur ou succes*/
-/*
+/*--------------------Cours FormData----------------------
 const imageUrl = document.getElementById("ajouterPhoto")
 const validerAjoutPhoto = document.getElementById("validerAjoutPhoto")
 
@@ -220,8 +223,41 @@ req.onload = function (event) {
 }
 req.send(data)
 ev.preventDefault()
-}, false)
-*/
+}, false)*/
+//----------------------------------------------------------
+const insertPhotoForm = document.getElementById("insertPhotos");
+const title = document.getElementById("titrePhoto")
+const categorie = document.getElementById("categoriePhoto")
+const Photo = document.getElementById("btnAjouterPhoto")
+
+insertPhotoForm.addEventListener("submit", async (event) => {
+	event.preventDefault();
+	console.log("test")
+	const data = new FormData()
+	data.append("title", title.value)
+	data.append("category", categorie.value)
+	data.append("image", Photo.files[0])
+	console.log(categorie.value)
+	const projet = await fetch("http://localhost:5678/api/works", {
+		method: "POST",
+		headers: {
+
+			"Authorization": `Bearer ${token}`
+		},
+		body: data,
+	});
+	const dataProj = await projet.json();
+	console.log(dataProj)
+	//todo revenir a modal 1 si created
+	if (dataProj.statut !== 201) {
+		alert(projet.statusText);
+	} else {
+		window.sessionStorage.removeItem("fiches")
+
+		closeModal();
+		window.location.reload()
+	}
+});
 
 // effacer un projet
 /*
