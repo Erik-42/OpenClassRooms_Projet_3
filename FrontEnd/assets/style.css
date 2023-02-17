@@ -437,6 +437,25 @@ footer nav ul {
   width: 100%;
 }
 
+.trash,
+.cross {
+  color: white;
+  background-color: black;
+  border-radius: 2px;
+  padding: 4px;
+}
+
+.trash:hover {
+  padding: 5px;
+}
+
+.cross {
+  opacity: 0;
+}
+
+.cross:hover {
+  opacity: 1;
+}
 /* Line de séparation */
 .line {
   display: inline-flex;

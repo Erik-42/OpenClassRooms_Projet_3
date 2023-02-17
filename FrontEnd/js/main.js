@@ -6,8 +6,6 @@ let token = window.sessionStorage.getItem("token");
 let fiches = window.sessionStorage.getItem("fiches");
 const deconnect = document.getElementById("btnChange");
 
-console.log(token);
-
 if (token) {
   let jsEdition = document.querySelectorAll(".jsEdition");
   for (let i = 0; i < jsEdition.length; i++) {

@@ -29,12 +29,10 @@
       <a href="">
       <input id="btnChange" type="button" value="publier les changements" />
       </a>
-      
     </form>
 
     <!--modale 1-->
-    <!--Todo faire apparaitre si click sur modifier-->
-    <aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal1" style="display: none;"><!--ajouter un style="display: none" a modifier en js si click btn ajouter photo-->
+    <aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal1" style="display: none;">
       <div class="modal-wrapper jsModalStop">
         <nav class="navModal">
           <i class="fa-solid fa-arrow-left" style="color: white;"></i>
@@ -60,23 +58,20 @@
     <!-- fin modale 1-->
 
     <!--debut modale 2-->
-    <!--Todo faire apparaître si click btn ajouter photo-->
     <aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal2" style="display: none;">
       <div class="modal-wrapper jsModalStop">
         <nav class="navModal">
           <!--retour a la modal 1-->
           <a href="#modal1" class="fa-solid fa-arrow-left"></a>
           <!--fermer la modal-->
-          <!--Todo ajouter procédure de fermeture simple des modal-->
           <button class="fa-solid fa-xmark jsCloseModal"></button>
         </nav>
         <section id="ajout">
           <h1 id="titleModal2">Ajout photo</h1>          
-          <form class="insertPhotos" method="post" enctype="multipart/form-data">
+          <form id="insertPhotos" class="insertPhotos" method="post" enctype="multipart/form-data">
             <!--Cadre ajout photos-->
             <section id="cadreBleu" class="preview">
                 <img class="iconPicture" src="./assets/icons/picture.png" alt="picture"></img>
-                  <!--Todo Prevoir une animation du btn ajouterPhoto-->
                   <label id="btnAjoutPhoto" for="ajouterPhoto">+ Ajouter photo
                     <input id="ajouterPhoto" class="ajouterPhoto" type="file" name="ajouterPhoto" accept=".jpg, .png" value="+ Ajouter photo"/>
                   </label>
@@ -84,16 +79,17 @@
                 <p>jpg, png : 4mo max</p>
             </section>
             <!--formulaire ajout photo-->
-            <label for="titre">Titre</label>
-            <input type="text" name="titre" id="titrePhoto" placeholder="ex: Salon"/><!--ajouter un required-->
+            <label for="title">Titre</label>
+            <input type="text" name="title" id="titrePhoto" required placeholder="ex: Salon" />
             <label for="categorie">Catégorie</label>
-            <input type="text" name="categorie" id="categoriePhoto" list="listeCategories" placeholder="ex: Objets"/><!--ajouter un required-->
+              <input type="text" name="categorie" id="categoriePhoto" list="listeCategories" required placeholder="ex: Objets" />
             <datalist id="listeCategories">
-<option value="Objets">Objets</option>
-<option value="Appartements">Appartements</option>
-<option value="Hotels & restaurants">Hotels & restaurants</option>
+              <option value="Objets">Objets</option>
+              <option value="Appartements">Appartements</option>
+              <option value="Hotels & restaurants">Hotels & restaurants</option>
             </datalist>
           </form>
+          <div id="output"></div>
             <!--ligne de séparation-->
             <p class="line"></p>
             <input id="validerAjoutPhoto" type="submit" value="valider"/><!--faire la procedure d'ajout de la photo dans la galerie-->
@@ -165,12 +161,10 @@
         <div class="projets">
         <h2>Mes Projets</h2>
         <div id="modifierProjets" class="jsEdition" style="display: none;">
-          <!--Todo placer a coté de mes projets-->
           <i class="fa-regular fa-pen-to-square"></i>
           <a class="jsModifier" href="#modal1">modifier</a>
         </div>
         </div>
-        <!--Todo faire disparaitre a la connexion-->
         <div id="filtres" class="editionBtn" style="display: null">
           <input class="btnall" type="button" value="Tous" />
           <input class="btnobjets" type="button" value="Objets" />
