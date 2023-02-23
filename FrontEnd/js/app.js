@@ -16,9 +16,9 @@ let modal2 = null;
 // ouverture de la modale1
 const openModal1 = async function (e) {
 	e.preventDefault();
-	console.log(e.target)
+
 	const target = e.target.getAttribute("href");
-	if (target.startsWith("#"))/*Todo a voir error*/ {
+	if (target.startsWith("#")) {
 		modal1 = document.querySelector(target);
 	} else {
 		modal1 = await loadModal(target);
@@ -129,7 +129,7 @@ function genererFicheModal(fiches) {
 		//création de la balise pour les fiches - balise<figure>
 		const ficheElement = document.createElement("figure");
 		// ajout icone trash
-		const iconeContainer = document.createElement("div")
+		const iconeContainer = document.createElement("nav")
 		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-arrows-up-down-left-right cross"></button>`
 		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-trash-can trash"></button>`
 		//Création des balises
@@ -138,7 +138,7 @@ function genererFicheModal(fiches) {
 
 		// lien editer //Todo revenir editer direct sur l'image clicker
 		const editer = document.createElement("a");
-		editer.innerHTML = `<a href="#modal2">editer</a>`
+		editer.innerHTML = `<a class="editer" href="#modal2">editer</a>`
 
 		// On rattache la balise article a la div galleryModal
 		sectionGallery.appendChild(ficheElement);
@@ -154,21 +154,19 @@ genererFicheModal(fiches);
 // Changement de modal1 1 => 2
 const loadModal = async function (url) {
 	const target = "#" + url.split("#")[1];
-	const existingModal = document.querySelector(target);
-	if (existingModal !== null) return existingModal;
+	const existingModal1 = document.querySelector(target);
+	if (existingModal1 !== null) return existingModal1;
 	const html = await fetch(url).then((reponse) => reponse.text());
 	const element = document
 		.createRange()
 		.createContextualFragment(html)
 		.querySelector(target)
-		.setAttribute("aria-hidden", "false");
-
+		.setAttribute("aria-hidden", "false")
+	//modal1.style.display = "none"
 	if (element === null)
 		throw "L'element ${target} na pas été trouvé dans la page ${url}";
 	document.body.append(element);
 	return element;
-
-	console.log(element);
 };
 
 // modal 2
@@ -193,38 +191,7 @@ function getImgData() {
 	}
 }
 //Ajout de photo à la galerie
-/*ajouter des message d'erreur ou succes*/
-/*--------------------Cours FormData----------------------
-const imageUrl = document.getElementById("ajouterPhoto")
-const validerAjoutPhoto = document.getElementById("validerAjoutPhoto")
 
-const title = document.getElementById("titrePhoto")
-const categorie = document.getElementById("categoriePhoto")
-const ajoutProjet = new FormData(insertPhotos[input, title, input, categorie])
-const request = new XMLHttpRequest()
-request.open("POST", "http://localhost:5678/api/users/works")
-request.send(new FormData(ajoutProjet))
-
-const insertPhotos = document.forms.namedItem("insertPhotos");
-insertPhotos.addEventListener('submit', function (ev) {
-const output = document.getElementById("output"),
-	data = new FormData(insertPhotos)
-
-data.append("données")
-
-const req = new XMLHttpRequest()
-req.open("POST", "http://localhost:5678/api/users/works", true)
-req.onload = function (event) {
-	if (req.status == 201) {
-		output.innerHTML = "Envoyé"
-	} else {
-		output.innerHTML = "erreur" + req.statusText + "lors de la tentaive d'envoi"
-	}
-}
-req.send(data)
-ev.preventDefault()
-}, false)*/
-//----------------------------------------------------------
 const insertPhotoForm = document.getElementById("insertPhotos");
 const title = document.getElementById("titrePhoto")
 const categorie = document.getElementById("categoriePhoto")
@@ -232,12 +199,12 @@ const Photo = document.getElementById("btnAjouterPhoto")
 
 insertPhotoForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
-	console.log("test")
+
 	const data = new FormData()
 	data.append("title", title.value)
 	data.append("category", categorie.value)
 	data.append("image", Photo.files[0])
-	console.log(categorie.value)
+
 	const projet = await fetch("http://localhost:5678/api/works", {
 		method: "POST",
 		headers: {
@@ -247,30 +214,76 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 		body: data,
 	});
 	const dataProj = await projet.json();
-	console.log(dataProj)
+
 	//todo revenir a modal 1 si created
 	if (dataProj.statut !== 201) {
 		alert(projet.statusText);
 	} else {
 		window.sessionStorage.removeItem("fiches")
 
-		closeModal();
 		window.location.reload()
+		closeModal();
 	}
 });
 
+//Editer projet
+const editProjet = document.querySelectorAll(".editer")
+editProjet.addEventListener("click", projetId)
+
+for (let i = 0; i < fiches.length; i++) {
+	const projetId = fiches[i];
+	if (fiches) {
+		const modif = FormData()
+		modif.append("title", title.value)
+		modif.append("category", categorie.value)
+		modif.append("image", Photo.files[0])
+
+		const projet = await fetch("http://localhost:5678/api/works/1", {
+			method: "GET",
+			headers: {
+
+				"Authorization": `Bearer ${token}`
+			},
+			body: modif,
+		})
+		const dataProj = await projet.json();
+
+		//todo revenir a modal 1 si click editer
+		if (dataProj.statut !== 201) {
+			alert(projet.statusText);
+		} else {
+			window.sessionStorage.setItem("fiches")
+
+			window.location.reload()
+			closeModal();
+		}
+	}
+}
+
 // effacer un projet
-/*
-const btnTrash = document.querySelector(".trash")
-trash.addEventListener("click", poubelle)
+const btnTrash = document.querySelectorAll(".trash")
+btnTrash.addEventListener("click", poubelle)
 
-poubelle() {
+async function poubelle(fiches) {
+	for (let i = 0; i < fiches.length; i++) {
+		const worksId = fiches[i];
+		if (fiches === null) return
+		else {
+			const supp = delete FormData()
+			supp.append("title", title.value)
+			supp.append("category", categorie.value)
+			supp.append("image", Photo.files[0])
+			console.log(supp)
+			const projet = await fetch("http://localhost:5678/api/works/1", {
+				method: "DELETE",
+				headers: {
 
+					"Authorization": `Bearer ${token}`
+				},
+				body: supp,
+
+			})
+		}
+	}
 }
-*/
-
-/*
-deleteGallery() {
-
-}
-*/
+//deleteGallery() {}

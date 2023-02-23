@@ -283,7 +283,9 @@ input[type="button"]:focus {
 
 #contact input,
 #pass input,
-#ajout input {
+#ajout input,
+#btnAjouterPhotoModal1 {
+
   height: 50px;
   font-size: 1.2em;
   border: none;
@@ -330,8 +332,15 @@ input[type="button"]:focus {
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+#gestGallery {
+  display: flex;
+}
+
 input[type="submit"],
-.btnAjouterPhotoModal1 {
+#btnAjouterPhotoModal1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: "Syne";
   font-weight: 700;
   color: white;
@@ -344,7 +353,7 @@ input[type="submit"],
 }
 
 input[type="submit"]:hover,
-.btnAjouterPhotoModal1:hover {
+#btnAjouterPhotoModal1:hover {
   color: white;
   background-color: #0e2f28;
 }
@@ -449,12 +458,9 @@ footer nav ul {
   width: 100%;
 }
 
-.fa-solid {
-  position: absolute;
-}
-
 .trash,
 .cross {
+  position: absolute;
   color: white;
   background-color: black;
   border-radius: 2px;
