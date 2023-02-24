@@ -217,7 +217,7 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 
 	//todo revenir a modal 1 si created
 	if (dataProj.statut !== 201) {
-		alert(projet.statusText);
+		//alert(projet.statusText);
 	} else {
 		window.sessionStorage.removeItem("fiches")
 
@@ -227,63 +227,96 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 });
 
 //Editer projet
+/*
 const editProjet = document.querySelectorAll(".editer")
-editProjet.addEventListener("click", projetId)
+editProjet.addEventListener("click", async (event) => {
+	event.preventDefault();
 
-for (let i = 0; i < fiches.length; i++) {
-	const projetId = fiches[i];
-	if (fiches) {
-		const modif = FormData()
-		modif.append("title", title.value)
-		modif.append("category", categorie.value)
-		modif.append("image", Photo.files[0])
+	const dataEdit = new FormData()
+	dataEdit.append("title", title.value)
+	dataEdit.append("category", categorie.value)
+	dataEdit.append("image", Photo.files[0])
 
-		const projet = await fetch("http://localhost:5678/api/works/1", {
-			method: "GET",
-			headers: {
-
-				"Authorization": `Bearer ${token}`
-			},
-			body: modif,
-		})
-		const dataProj = await projet.json();
-
-		//todo revenir a modal 1 si click editer
-		if (dataProj.statut !== 201) {
-			alert(projet.statusText);
-		} else {
-			window.sessionStorage.setItem("fiches")
-
-			window.location.reload()
-			closeModal();
-		}
+	for (const dataEditValue of dataEdit.entries()) {
+		console.log(dataEditValue)
 	}
-}
+	const projetEdit = await fetch("http://localhost:5678/api/works", {
+		method: "GET",
+		headers: {
+
+			"Authorization": `Bearer ${token}`
+		},
+		body: dataEdit,
+	})
+	const dataEditProj = await projetEdit.json();
+	window.sessionStorage.setItem("fiches")
+
+	window.location.reload()
+	closeModal();
+})
+*/
+
+//Supprime projet
+//Todo Ajouter message de confirmation de suppression
+
+const deleteProjet = document.querySelectorAll(".btnTrash")
+deleteProjet.addEventListener("click", async (e) => {
+	e.preventDefault();
+
+	const dataDelete = new FormData(suppData)
+	dataDelete.append("title", title.value)
+	dataDelete.append("category", categorie.value)
+	dataDelete.append("image", Photo.files[0])
+
+	deleteProjet.delete('username')
+
+	const projetDelete = await fetch("http://localhost:5678/api/works", {
+		method: "DELETE",
+		headers: {
+
+			"Authorization": `Bearer ${token}`
+		},
+		body: dataDelete,
+	})
+})
+
+
+//-----------Methode alternative de suppression---------
 
 // effacer un projet
-const btnTrash = document.querySelectorAll(".trash")
-btnTrash.addEventListener("click", poubelle)
-
-async function poubelle(fiches) {
-	for (let i = 0; i < fiches.length; i++) {
-		const worksId = fiches[i];
-		if (fiches === null) return
-		else {
-			const supp = delete FormData()
-			supp.append("title", title.value)
-			supp.append("category", categorie.value)
-			supp.append("image", Photo.files[0])
-			console.log(supp)
-			const projet = await fetch("http://localhost:5678/api/works/1", {
-				method: "DELETE",
-				headers: {
-
-					"Authorization": `Bearer ${token}`
-				},
-				body: supp,
-
-			})
-		}
+/*
+const btnTrash = document.getElementById("modal1")
+btnTrash.addEventListener("click", (e) => {
+	if (e.target.className === "btnTrash") {
+		const indexFigure = parseInt(e.target.parentElement.getAttribute('index'))
+		const figurePortfolio = e.target.parentElement
+		poubelle(indexFigure, figurePortfolio)
 	}
+})
+
+function poubelle(figureSupp, indexSupp) {
+	fetch(`http://localhost:5678/api/worksModal/${indexSupp}`, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": application / json,
+
+			Authorization: `Bearer ${token}`
+		},
+	})
+		.then((reponse) => {
+			const figureGallery = document.querySelectorAll(".figureGallery")
+			if (!reponse.ok) {
+				alert("Suppression impossible")
+			} else {
+				figureSupp.remove()
+				figureGallery.forEach((element) => {
+					if (parseInt(element.getAttribute("index")) === indexSupp) {
+						element.remove();
+					}
+				});
+			}
+		})
 }
+*/
+
 //deleteGallery() {}

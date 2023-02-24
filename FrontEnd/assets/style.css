@@ -458,8 +458,8 @@ footer nav ul {
   width: 100%;
 }
 
-.trash,
-.cross {
+.btnTrash,
+.btnCross {
   position: absolute;
   color: white;
   background-color: black;
@@ -467,15 +467,15 @@ footer nav ul {
   padding: 4px;
 }
 
-.trash:hover {
+.btnTrash:hover {
   padding: 5px;
 }
 
-.cross {
+.btnCross {
   opacity: 0;
 }
 
-.cross:hover {
+.btnCross:hover {
   opacity: 1;
 }
 
