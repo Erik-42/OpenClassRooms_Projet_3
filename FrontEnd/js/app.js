@@ -38,13 +38,15 @@ const openModal1 = async function (e) {
 const closeModal = function (e) {
 	if (modal1 === null) return;
 	if (focusElementPrecedent !== null) focusElementPrecedent;
-	e.preventDefault();
+	if (e) { e.preventDefault() };
+
 	/* 
 	autre methode animation reverse 
 	modal1.style.display = "none";
 	modal1.offsetWidth;
 	modal1.style.display = null;
 	*/
+
 	window.setTimeout(function () {
 		modal1.style.display = "none";
 		modal1 = null;
@@ -55,6 +57,7 @@ const closeModal = function (e) {
 	modal1
 		.querySelector(".jsCloseModal")
 		.removeEventListener("click", closeModal);
+	modal1.querySelector(".jsCloseModal").addEventListener("click", closeModal);
 	modal1.querySelector(".jsModalStop").removeEventListener("click", stopEvent);
 	/* 
 	autre methode de fermeture
@@ -103,53 +106,78 @@ window.addEventListener("keydown", function (e) {
 //galerie Modal1
 // Todo reutiliser la galerie de main.js et ajouter les icones
 
-// Fiches stockées en local
-if (fiches === null) {
-	// Récupération des fiches depuis le files JSON
-	//const askApi = await fetch("./js/works.json");
+// Création des balises
+async function genererFicheModal(fiches) {
+
 	const askApi = await fetch("http://localhost:5678/api/works");
 	fiches = await askApi.json();
 
-	// Transformation des fiches en JSON
-	const valeurFiches = JSON.stringify(fiches);
-	// Stockage des informations dans le sessionStorage
-	window.sessionStorage.setItem("fiches", valeurFiches);
-} else {
-	fiches = JSON.parse(fiches);
-}
+	// Récupération de l'élément du DOM qui accueillera les fiches
+	const sectionGalleryModal = document.querySelector(".galleryModal");
+	sectionGalleryModal.innerHTML = ""
 
-// Création des balises
-function genererFicheModal(fiches) {
 	for (let i = 0; i < fiches.length; i++) {
-		const works = fiches[i];
-
-		// Récupération de l'élément du DOM qui accueillera les fiches
-		const sectionGallery = document.querySelector(".galleryModal");
-
+		const worksModal = fiches[i];
+		console.log(worksModal)
 		//création de la balise pour les fiches - balise<figure>
 		const ficheElement = document.createElement("figure");
-		// ajout icone trash
-		const iconeContainer = document.createElement("nav")
-		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-arrows-up-down-left-right cross"></button>`
-		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-trash-can trash"></button>`
-		//Création des balises
+		ficheElement.classList.add("figureGallery")
+		ficheElement.dataset.index = worksModal.id
+		// ajout icone trash et cross
+
+		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-arrows-up-down-left-right btnCross"></button>`
+		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-trash-can btnTrash"></button>`
+		//Création des images
 		const imageElement = document.createElement("img");
-		imageElement.src = works.imageUrl;
+		imageElement.src = worksModal.imageUrl;
 
 		// lien editer //Todo revenir editer direct sur l'image clicker
 		const editer = document.createElement("a");
-		editer.innerHTML = `<a class="editer" href="#modal2">editer</a>`
+		editer.innerHTML = `<a class="editer" href="#modal1">editer</a>`
 
 		// On rattache la balise article a la div galleryModal
-		sectionGallery.appendChild(ficheElement);
+		sectionGalleryModal.appendChild(ficheElement);
 
 		//Rattachement de nos balises au DOM
 		ficheElement.appendChild(imageElement);
 		ficheElement.appendChild(editer);
 	}
+	//Supprime projet
+	//Todo Ajouter message de confirmation de suppression
+	const deleteProjet = document.querySelectorAll(".btnTrash")
+	for (let i = 0; i < deleteProjet.length; i++) {
+		deleteProjet[i].addEventListener("click", async (e) => {
+			e.preventDefault();
+			const id = e.target.parentNode.dataset.index
+			console.log(deleteProjet)
+			/*const dataDelete = new FormData(suppData)
+			dataDelete.append("title", title.value)
+			dataDelete.append("category", categorie.value)
+			dataDelete.append("image", Photo.files[0])
+		
+			deleteProjet.delete('username')*/
+
+			const projetDelete = await fetch(`http://localhost:5678/api/works/${id}`, {
+				method: "DELETE",
+				headers: {
+
+					"Authorization": `Bearer ${token}`
+				},
+				//body: dataDelete,
+			})
+
+			window.sessionStorage.removeItem("fiches")
+			genererFicheModal()
+			//window.location.reload()
+			//closeModal();
+
+
+		})
+	}
 }
+
 //Création des fiches
-genererFicheModal(fiches);
+await genererFicheModal();
 
 // Changement de modal1 1 => 2
 const loadModal = async function (url) {
@@ -190,8 +218,8 @@ function getImgData() {
 		});
 	}
 }
-//Ajout de photo à la galerie
 
+//Ajout de photo à la galerie
 const insertPhotoForm = document.getElementById("insertPhotos");
 const title = document.getElementById("titrePhoto")
 const categorie = document.getElementById("categoriePhoto")
@@ -200,10 +228,10 @@ const Photo = document.getElementById("btnAjouterPhoto")
 insertPhotoForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
 
-	const data = new FormData()
-	data.append("title", title.value)
-	data.append("category", categorie.value)
-	data.append("image", Photo.files[0])
+	const dataAjout = new FormData()
+	dataAjout.append("title", title.value)
+	dataAjout.append("category", categorie.value)
+	dataAjout.append("image", Photo.files[0])
 
 	const projet = await fetch("http://localhost:5678/api/works", {
 		method: "POST",
@@ -211,112 +239,15 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 
 			"Authorization": `Bearer ${token}`
 		},
-		body: data,
+		body: dataAjout,
 	});
-	const dataProj = await projet.json();
 
-	//todo revenir a modal 1 si created
-	if (dataProj.statut !== 201) {
-		//alert(projet.statusText);
-	} else {
-		window.sessionStorage.removeItem("fiches")
+	window.sessionStorage.removeItem("fiches")
 
-		window.location.reload()
-		closeModal();
-	}
+	genererFicheModal()
+	closeModal();
+
 });
 
-//Editer projet
-/*
-const editProjet = document.querySelectorAll(".editer")
-editProjet.addEventListener("click", async (event) => {
-	event.preventDefault();
-
-	const dataEdit = new FormData()
-	dataEdit.append("title", title.value)
-	dataEdit.append("category", categorie.value)
-	dataEdit.append("image", Photo.files[0])
-
-	for (const dataEditValue of dataEdit.entries()) {
-		console.log(dataEditValue)
-	}
-	const projetEdit = await fetch("http://localhost:5678/api/works", {
-		method: "GET",
-		headers: {
-
-			"Authorization": `Bearer ${token}`
-		},
-		body: dataEdit,
-	})
-	const dataEditProj = await projetEdit.json();
-	window.sessionStorage.setItem("fiches")
-
-	window.location.reload()
-	closeModal();
-})
-*/
-
-//Supprime projet
-//Todo Ajouter message de confirmation de suppression
-
-const deleteProjet = document.querySelectorAll(".btnTrash")
-deleteProjet.addEventListener("click", async (e) => {
-	e.preventDefault();
-
-	const dataDelete = new FormData(suppData)
-	dataDelete.append("title", title.value)
-	dataDelete.append("category", categorie.value)
-	dataDelete.append("image", Photo.files[0])
-
-	deleteProjet.delete('username')
-
-	const projetDelete = await fetch("http://localhost:5678/api/works", {
-		method: "DELETE",
-		headers: {
-
-			"Authorization": `Bearer ${token}`
-		},
-		body: dataDelete,
-	})
-})
-
-
-//-----------Methode alternative de suppression---------
-
-// effacer un projet
-/*
-const btnTrash = document.getElementById("modal1")
-btnTrash.addEventListener("click", (e) => {
-	if (e.target.className === "btnTrash") {
-		const indexFigure = parseInt(e.target.parentElement.getAttribute('index'))
-		const figurePortfolio = e.target.parentElement
-		poubelle(indexFigure, figurePortfolio)
-	}
-})
-
-function poubelle(figureSupp, indexSupp) {
-	fetch(`http://localhost:5678/api/worksModal/${indexSupp}`, {
-		method: "DELETE",
-		headers: {
-			"Content-Type": application / json,
-
-			Authorization: `Bearer ${token}`
-		},
-	})
-		.then((reponse) => {
-			const figureGallery = document.querySelectorAll(".figureGallery")
-			if (!reponse.ok) {
-				alert("Suppression impossible")
-			} else {
-				figureSupp.remove()
-				figureGallery.forEach((element) => {
-					if (parseInt(element.getAttribute("index")) === indexSupp) {
-						element.remove();
-					}
-				});
-			}
-		})
-}
-*/
 
 //deleteGallery() {}

@@ -79,14 +79,16 @@
           <!--formulaire ajout photo-->
           <label for="title">Titre</label>
           <input type="text" name="title" id="titrePhoto" required placeholder="ex: Salon" />
-          <label for="categorie">Catégorie</label>
-          <input type="text" name="categorie" id="categoriePhoto" list="listeCategories" required
+
+          <label for="categoriePhoto">Catégorie</label>
+
+          <input type="text" name="categoriePhoto" id="categoriePhoto" list="listeCategories" required
             placeholder="ex: Objets" />
-          <datalist id="listeCategories">
+          <select id="listeCategories">
             <option value="1">Objets</option>
             <option value="2">Appartements</option>
             <option value="3">Hotels & restaurants</option>
-          </datalist>
+          </select>
 
           <div id="output"></div>
           <!--ligne de séparation-->
