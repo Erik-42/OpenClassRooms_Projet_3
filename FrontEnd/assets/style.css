@@ -284,7 +284,8 @@ input[type="button"]:focus {
 #contact input,
 #pass input,
 #ajout input,
-#btnAjouterPhotoModal1 {
+#btnAjouterPhotoModal1,
+#categoriePhoto {
 
   height: 50px;
   font-size: 1.2em;
@@ -434,7 +435,7 @@ footer nav ul {
 }
 
 *:focus {
-  box-shadow: 0 0 10px blue;
+  box-shadow: 0 0 10px rgb(112, 112, 245);
   /*a enlever en prod*/
 }
 
@@ -484,6 +485,7 @@ footer nav ul {
   display: inline-flex;
   width: 420px;
   border: 1px solid #b3b3b3;
+  margin-top: 50px;
 }
 
 /* suppression galerie*/

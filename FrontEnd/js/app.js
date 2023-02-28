@@ -4,14 +4,13 @@ let fiches = window.sessionStorage.getItem("fiches");
 let token = window.sessionStorage.getItem("token");
 
 // gestion des modales
-//modal1
+//modales
 let modal1 = null;
+
 //focus pour tab
 const focusableSelector = "button, a, input, textarea";
 let focusables = [];
 let focusElementPrecedent = null;
-//modal2
-let modal2 = null;
 
 // ouverture de la modale1
 const openModal1 = async function (e) {
@@ -37,36 +36,18 @@ const openModal1 = async function (e) {
 // fermeture des modales
 const closeModal = function (e) {
 	if (modal1 === null) return;
-	if (focusElementPrecedent !== null) focusElementPrecedent;
+	if (focusElementPrecedent !== null) focusElementPrecedent.focus();
 	if (e) { e.preventDefault() };
-
-	/* 
-	autre methode animation reverse 
-	modal1.style.display = "none";
-	modal1.offsetWidth;
-	modal1.style.display = null;
-	*/
 
 	window.setTimeout(function () {
 		modal1.style.display = "none";
 		modal1 = null;
 	}, 500);
-	modal1.removeAttribute("aria-hidden");
+	modal1.setAttribute("aria-hidden", "true");
 	modal1.removeAttribute("aria-modal");
 	modal1.removeEventListener("click", closeModal);
-	modal1
-		.querySelector(".jsCloseModal")
-		.removeEventListener("click", closeModal);
-	modal1.querySelector(".jsCloseModal").addEventListener("click", closeModal);
+	modal1.querySelector(".jsCloseModal").removeEventListener("click", closeModal);
 	modal1.querySelector(".jsModalStop").removeEventListener("click", stopEvent);
-	/* 
-	autre methode de fermeture
-	const hide
-		modal1.addEventListener('animationend', function() {
-			modal1.style.display = "none";
-			modal1 = null;
-		})
-	*/
 };
 
 // bloque evenement
@@ -77,8 +58,15 @@ const stopEvent = function (e) {
 //focus dans la modale
 const focusInModal = function (e) {
 	e.preventDefault();
+
 	let index = focusables.findIndex((f) => f === modal1.querySelector(":focus"));
-	index++;
+	if (e.shiftKey === true) {
+		index--
+	} else {
+		index++;
+	}
+	console.log(index)
+	console.log(focusables)
 	if (index >= focusables.length) {
 		index = 0;
 	}
@@ -105,12 +93,11 @@ window.addEventListener("keydown", function (e) {
 
 //galerie Modal1
 // Todo reutiliser la galerie de main.js et ajouter les icones
-
-// Création des balises
+// Création des fiches
 async function genererFicheModal(fiches) {
 
-	const askApi = await fetch("http://localhost:5678/api/works");
-	fiches = await askApi.json();
+	const askApiModal = await fetch("http://localhost:5678/api/works");
+	fiches = await askApiModal.json();
 
 	// Récupération de l'élément du DOM qui accueillera les fiches
 	const sectionGalleryModal = document.querySelector(".galleryModal");
@@ -118,15 +105,16 @@ async function genererFicheModal(fiches) {
 
 	for (let i = 0; i < fiches.length; i++) {
 		const worksModal = fiches[i];
-		console.log(worksModal)
+
 		//création de la balise pour les fiches - balise<figure>
 		const ficheElement = document.createElement("figure");
 		ficheElement.classList.add("figureGallery")
 		ficheElement.dataset.index = worksModal.id
-		// ajout icone trash et cross
 
+		// ajout icone trash et cross
 		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-arrows-up-down-left-right btnCross"></button>`
 		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-trash-can btnTrash"></button>`
+
 		//Création des images
 		const imageElement = document.createElement("img");
 		imageElement.src = worksModal.imageUrl;
@@ -150,12 +138,6 @@ async function genererFicheModal(fiches) {
 			e.preventDefault();
 			const id = e.target.parentNode.dataset.index
 			console.log(deleteProjet)
-			/*const dataDelete = new FormData(suppData)
-			dataDelete.append("title", title.value)
-			dataDelete.append("category", categorie.value)
-			dataDelete.append("image", Photo.files[0])
-		
-			deleteProjet.delete('username')*/
 
 			const projetDelete = await fetch(`http://localhost:5678/api/works/${id}`, {
 				method: "DELETE",
@@ -163,45 +145,48 @@ async function genererFicheModal(fiches) {
 
 					"Authorization": `Bearer ${token}`
 				},
-				//body: dataDelete,
+
 			})
 
 			window.sessionStorage.removeItem("fiches")
 			genererFicheModal()
-			//window.location.reload()
-			//closeModal();
-
 
 		})
 	}
 }
-
 //Création des fiches
 await genererFicheModal();
+
+//Todo FAire édition galerie
+//editGallery() {}
 
 // Changement de modal1 1 => 2
 const loadModal = async function (url) {
 	const target = "#" + url.split("#")[1];
 	const existingModal1 = document.querySelector(target);
+
 	if (existingModal1 !== null) return existingModal1;
 	const html = await fetch(url).then((reponse) => reponse.text());
-	const element = document
-		.createRange()
-		.createContextualFragment(html)
-		.querySelector(target)
-		.setAttribute("aria-hidden", "false")
-	//modal1.style.display = "none"
+	const element = document.createRange().createContextualFragment(html).querySelector(target).setAttribute("aria-hidden", "false")
+	existingModal1.document.getElementById("modal1").style.display = "none"
 	if (element === null)
 		throw "L'element ${target} na pas été trouvé dans la page ${url}";
 	document.body.append(element);
-	return element;
+	return target;
 };
+
+//retour modal1
+const btnBack = document.querySelector(".back");
+const hideModal2 = document.getElementById("modal2");
+
+btnBack.addEventListener("click", (e) => {
+	hideModal2.style.display = "none";
+});
 
 // modal 2
 // preview image
 const imgPreview = document.getElementById("cadreBleu");
 const choixImage = document.getElementById("btnAjouterPhoto");
-
 
 btnAjouterPhoto.addEventListener("change", function () {
 	getImgData();
@@ -243,6 +228,9 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 	});
 
 	window.sessionStorage.removeItem("fiches")
+	title.value = ""
+	categorie.value = ""
+	Photo.value = ""
 
 	genererFicheModal()
 	closeModal();

@@ -4,48 +4,49 @@
 let token = window.sessionStorage.getItem("token");
 //Récupération des fiches eventuellement stockées dans le sessionStorage
 let fiches = window.sessionStorage.getItem("fiches");
-const deconnect = document.getElementById("btnChange");
+const deconnect = document.getElementById("logout");
+
+// deconnexion
+deconnect.addEventListener("click", (event) => {
+  window.sessionStorage.clear();
+});
 
 if (token) {
   let jsEdition = document.querySelectorAll(".jsEdition");
   for (let i = 0; i < jsEdition.length; i++) {
     jsEdition[i].style.display = null;
   }
-  document.getElementById("filtres").style.display = "none";
-}
-// Fiches stockées en local
-if (fiches === null) {
-  // Récupération des fiches depuis le fichier JSON
-  //const askApi = await fetch("./js/works.json");
-  const askApi = await fetch("http://localhost:5678/api/works");
-  fiches = await askApi.json();
-
-  // Transformation des fiches en JSON
-  const valeurFiches = JSON.stringify(fiches);
-  // Stockage des informations dans le sessionStorage
-  window.sessionStorage.setItem("fiches", valeurFiches);
-} else {
-  fiches = JSON.parse(fiches);
+  document.getElementById("filtres").style.display = "none"
+  document.getElementById("login").style.display = "none";
 }
 
-// Création des balises
-function genererFiches(fiches) {
+// Récupération des fiches depuis le fichier JSON
+const askApi = await fetch("http://localhost:5678/api/works");
+fiches = await askApi.json();
+
+// Création des Fiches Projets
+async function genererFiches(fiches) {
+
+  // Récupération de l'élément du DOM qui accueillera les fiches
+  const sectionGallery = document.querySelector(".gallery");
+  sectionGallery.innerHTML = ""
+
   for (let i = 0; i < fiches.length; i++) {
     const works = fiches[i];
 
-    // Récupération de l'élément du DOM qui accueillera les fiches
-    const divGallery = document.querySelector(".gallery");
-
     //création de la balise pour les fiches - balise<figure>
     const ficheElement = document.createElement("figure");
-    //Création des balises
+    ficheElement.classList.add("figureGallery")
+    ficheElement.dataset.index = works.id
+
+    //Création des images
     const imageElement = document.createElement("img");
     imageElement.src = works.imageUrl;
     const titleElement = document.createElement("figcaption");
     titleElement.innerText = works.title;
 
     // On rattache la balise article a la div gallery
-    divGallery.appendChild(ficheElement);
+    sectionGallery.appendChild(ficheElement);
 
     //Rattachement de nos balises au DOM
     ficheElement.appendChild(imageElement);
@@ -54,7 +55,7 @@ function genererFiches(fiches) {
 }
 
 //Création des fiches
-genererFiches(fiches);
+await genererFiches(fiches);
 
 //Filtres
 //ToDo améliorer code des filtres
@@ -103,7 +104,4 @@ btnhotels.addEventListener("click", function () {
   genererFiches(filtresFiches);
 });
 
-// deconnexion
-deconnect.addEventListener("click", (event) => {
-  window.sessionStorage.clear();
-});
+

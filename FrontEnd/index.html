@@ -43,9 +43,8 @@
       <p class="line"></p>
       <form id="gestGallery">
 
-        <a href="#modal2" id="btnAjouterPhotoModal1" class="jsModifier">Ajouter une photo
-
-        </a>
+        <input type="submit" href="#modal2" class="jsModifier btnAjouterPhotoModal1" value="Ajouter une photo">
+        </input>
       </form>
       <!--TOdo ajouter fenetre de confirmation de suppression-->
       <a class="supp" href="#">supprimer la galerie</a>
@@ -59,7 +58,7 @@
     <div class="modal-wrapper jsModalStop">
       <nav class="navModal">
         <!--retour a la modal 1-->
-        <a href="#modal1" class="fa-solid fa-arrow-left"></a>
+        <a href="#modal1" class="fa-solid fa-arrow-left back"></a>
         <!--fermer la modal-->
         <button class="fa-solid fa-xmark jsCloseModal"></button>
       </nav>
@@ -79,12 +78,9 @@
           <!--formulaire ajout photo-->
           <label for="title">Titre</label>
           <input type="text" name="title" id="titrePhoto" required placeholder="ex: Salon" />
-
+          <!--<input type="text" name="categoriePhoto" id="categoriePhoto" list="listeCategories" required placeholder="ex: Objets" />-->
           <label for="categoriePhoto">Catégorie</label>
-
-          <input type="text" name="categoriePhoto" id="categoriePhoto" list="listeCategories" required
-            placeholder="ex: Objets" />
-          <select id="listeCategories">
+          <select id="categoriePhoto">
             <option value="1">Objets</option>
             <option value="2">Appartements</option>
             <option value="3">Hotels & restaurants</option>
@@ -93,7 +89,7 @@
           <div id="output"></div>
           <!--ligne de séparation-->
           <p class="line"></p>
-          <input id="validerAjoutPhoto" type="submit"
+          <input id="validerAjoutPhoto" class="btnAjouterPhotoModal1" type="submit"
             value="valider" /><!--faire la procedure d'ajout de la photo dans la galerie-->
         </form>
       </section>
@@ -117,7 +113,11 @@
           <a href="#contact">contact</a>
         </li>
         <li>
-          <a href="login.html">login</a>
+          <a id="login" href="login.html" style="
+          display: null;">login</a>
+        </li>
+        <li>
+          <a id="logout" class="jsEdition" href="" style="display: none;">logout</a>
         </li>
         <li>
           <a href="http://instagram.com" target="_blank"><!--Todo ajouter le lien direct au compte de Sophie-->
