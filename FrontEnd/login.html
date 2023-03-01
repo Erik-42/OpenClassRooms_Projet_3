@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Sophie Bluel - Architecte d'intérieur</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
+    rel="stylesheet" />
+  <meta name="description" content="" />
+  <link rel="stylesheet" href="./assets/style.css" />
+  <script type="module" src="./js/login.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Sophie Bluel<span>Architecte d'intérieur</span></h1>
+    <nav>
+      <ul>
+        <li>
+          <a href="./index.html#portfolio">projets</a>
+        </li>
+        <li>
+          <a href="index.html#contact">contact</a>
+        </li>
+        <li>
+          <a href="login.html">login</a>
+        </li>
+        <li>
+          <a href="http://instagram.com" target="_blank"><!--Todo ajouter le lien direct au compte de Sophie-->
+            <img src="./assets/icons/instagram.png" alt="Instagram" />
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="pass">
+      <h2>Log in</h2>
+      <p>Connectez-vous !</p>
+      <form id="loginForm" name="loginForm" action="./index.html" method="post">
+        <label for="mail">E-mail</label>
+        <input id="email" type="email" name="email" id="email" required maxlength="128"
+          placeholder="ex: sophie.bluel@test.tld" />
+        <label for="password">Mot de passe (6 characters minimum)</label>
+        <input id="password" type="password" name="password" id="password" minlength="6" maxlength="64"
+          autocomplete="current-password" placeholder="ex: S0phie" />
+        <input id="connect" type="submit" value="Se connecter" />
+        <a class="forgotpassword" href="#">Mot de passe oublié</a>
+        <!--Todo prevoir une procédure de récupération de password-->
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <nav>
+      <ul>
+        <a href="#">
+          <li>Mentions Légales</li>
+        </a>
+      </ul>
+    </nav>
+  </footer>
+</body>
+
+</html>
