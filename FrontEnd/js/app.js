@@ -1,5 +1,6 @@
 // Récupération des fiches eventuellement stockées dans le sessionStorage
 let fiches = window.sessionStorage.getItem("fiches");
+
 // recup du token dans le session storage
 let token = window.sessionStorage.getItem("token");
 
@@ -15,7 +16,6 @@ let focusElementPrecedent = null;
 // ouverture de la modale1
 const openModal1 = async function (e) {
 	e.preventDefault();
-
 	const target = e.target.getAttribute("href");
 	if (target.startsWith("#")) {
 		modal1 = document.querySelector(target);
@@ -38,7 +38,6 @@ const closeModal = function (e) {
 	if (modal1 === null) return;
 	if (focusElementPrecedent !== null) focusElementPrecedent.focus();
 	if (e) { e.preventDefault() };
-
 	window.setTimeout(function () {
 		modal1.style.display = "none";
 		modal1 = null;
@@ -52,7 +51,7 @@ const closeModal = function (e) {
 
 // bloque evenement
 const stopEvent = function (e) {
-	e.stopPropagation(); //Todo voir pourquoi error
+	e.stopPropagation();
 };
 
 //focus dans la modale
@@ -65,8 +64,7 @@ const focusInModal = function (e) {
 	} else {
 		index++;
 	}
-	console.log(index)
-	console.log(focusables)
+
 	if (index >= focusables.length) {
 		index = 0;
 	}
@@ -92,7 +90,6 @@ window.addEventListener("keydown", function (e) {
 });
 
 //galerie Modal1
-// Todo reutiliser la galerie de main.js et ajouter les icones
 // Création des fiches
 async function genererFicheModal(fiches) {
 
@@ -110,23 +107,20 @@ async function genererFicheModal(fiches) {
 		const ficheElement = document.createElement("figure");
 		ficheElement.classList.add("figureGallery")
 		ficheElement.dataset.index = worksModal.id
-
-		// ajout icone trash et cross
-		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-arrows-up-down-left-right btnCross"></button>`
-		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-trash-can btnTrash"></button>`
+		ficheElement.innerHTML = `<button class="fa-sharp fa-solid fa-arrows-up-down-left-right btnCross" ></button><button class="fa-sharp fa-solid fa-trash-can btnTrash"></button>`
 
 		//Création des images
 		const imageElement = document.createElement("img");
 		imageElement.src = worksModal.imageUrl;
 
-		// lien editer //Todo revenir editer direct sur l'image clicker
+		// lien editer /*Todo revenir editer direct sur l'image clicker*/
 		const editer = document.createElement("a");
 		editer.innerHTML = `<a class="editer" href="#modal1">editer</a>`
 
 		// On rattache la balise article a la div galleryModal
 		sectionGalleryModal.appendChild(ficheElement);
 
-		//Rattachement de nos balises au DOM
+		//Rattachement de les balises au DOM
 		ficheElement.appendChild(imageElement);
 		ficheElement.appendChild(editer);
 	}
@@ -137,34 +131,28 @@ async function genererFicheModal(fiches) {
 		deleteProjet[i].addEventListener("click", async (e) => {
 			e.preventDefault();
 			const id = e.target.parentNode.dataset.index
-			console.log(deleteProjet)
-
 			const projetDelete = await fetch(`http://localhost:5678/api/works/${id}`, {
 				method: "DELETE",
 				headers: {
-
 					"Authorization": `Bearer ${token}`
 				},
-
 			})
-
 			window.sessionStorage.removeItem("fiches")
 			genererFicheModal()
-
 		})
 	}
 }
 //Création des fiches
 await genererFicheModal();
 
-//Todo FAire édition galerie
+//Todo Faire édition galerie
 //editGallery() {}
 
-// Changement de modal1 1 => 2
+// Changement modal modal1--> modal2
 const loadModal = async function (url) {
 	const target = "#" + url.split("#")[1];
 	const existingModal1 = document.querySelector(target);
-
+	console.log(existingModal1)
 	if (existingModal1 !== null) return existingModal1;
 	const html = await fetch(url).then((reponse) => reponse.text());
 	const element = document.createRange().createContextualFragment(html).querySelector(target).setAttribute("aria-hidden", "false")
@@ -175,23 +163,34 @@ const loadModal = async function (url) {
 	return target;
 };
 
-//retour modal1
+//retour modal2-->modal1
 const btnBack = document.querySelector(".back");
 const hideModal2 = document.getElementById("modal2");
-
 btnBack.addEventListener("click", (e) => {
 	hideModal2.style.display = "none";
 });
 
-// modal 2
-// preview image
+//modal 2
+//preview image
 const imgPreview = document.getElementById("cadreBleu");
 const choixImage = document.getElementById("btnAjouterPhoto");
+const elementGris = document.getElementById("validerAjoutPhoto")
+const photo = document.getElementById("btnAjouterPhoto")
+const insertPhotoForm = document.getElementById("insertPhotos");
+const title = document.getElementById("titrePhoto")
+const categorie = document.getElementById("categoriePhoto")
 
 btnAjouterPhoto.addEventListener("change", function () {
 	getImgData();
 });
-
+if (FileList.length == 0) {
+	//elementGris.disabled = true
+	elementGris.style.backgroundColor = "grey"
+} else if (FileList.length == 1) {
+	//elementGris.disabled = false
+	elementGris.style.backgroundColor = "red"
+}
+//Recupere et affiche la photo choisie
 function getImgData() {
 	const files = btnAjouterPhoto.files[0];
 	if (files) {
@@ -205,37 +204,33 @@ function getImgData() {
 }
 
 //Ajout de photo à la galerie
-const insertPhotoForm = document.getElementById("insertPhotos");
-const title = document.getElementById("titrePhoto")
-const categorie = document.getElementById("categoriePhoto")
-const Photo = document.getElementById("btnAjouterPhoto")
-
 insertPhotoForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
 
 	const dataAjout = new FormData()
 	dataAjout.append("title", title.value)
 	dataAjout.append("category", categorie.value)
-	dataAjout.append("image", Photo.files[0])
+	dataAjout.append("image", photo.files[0])
 
 	const projet = await fetch("http://localhost:5678/api/works", {
 		method: "POST",
+
 		headers: {
 
 			"Authorization": `Bearer ${token}`
 		},
 		body: dataAjout,
-	});
 
+	});
 	window.sessionStorage.removeItem("fiches")
 	title.value = ""
-	categorie.value = ""
-	Photo.value = ""
+	categorie.value = "1"
+	//photo.files = 0
 
 	genererFicheModal()
 	closeModal();
 
 });
 
-
+/*Todo supprimer completement la galerie*/
 //deleteGallery() {}

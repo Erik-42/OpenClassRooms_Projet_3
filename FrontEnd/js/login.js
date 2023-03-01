@@ -1,5 +1,3 @@
-//sessionStorage.clear();
-
 const loginForm = document.getElementById("loginForm");
 const connect = document.getElementById("connect");
 const email = document.getElementById("email");
@@ -16,6 +14,7 @@ loginForm.addEventListener("submit", async (event) => {
     email: email.value,
     password: password.value,
   });
+
   const login = await fetch("http://localhost:5678/api/users/login", {
     method: "POST",
     headers: {
@@ -23,14 +22,13 @@ loginForm.addEventListener("submit", async (event) => {
     },
     body: bodyJson,
   });
+
   const data = await login.json();
 
-  //todo tester token si pas token message erreur sinon sessionstorage
   if (data.token == null) {
     alert("User " + login.statusText);
   } else {
     window.sessionStorage.setItem("token", data.token);
-
     window.location.href = "./index.html";
   }
 });

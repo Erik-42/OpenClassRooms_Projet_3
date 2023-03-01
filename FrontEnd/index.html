@@ -14,7 +14,6 @@
   <script src="https://kit.fontawesome.com/4ec6d39a0c.js" crossorigin="anonymous"></script>
   <script type="module" src="./js/app.js"></script>
   <script type="module" src="./js/main.js"></script>
-
 </head>
 
 <body>
@@ -27,7 +26,7 @@
     </a>
   </form>
 
-  <!--modale 1-->
+  <!--debut modale 1-->
   <aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal1"
     style="display: none;">
     <div class="modal-wrapper jsModalStop">
@@ -36,13 +35,16 @@
         <button class="fa-solid fa-xmark jsCloseModal"></button>
       </nav>
       <h1 id="titleModal1">Galerie photo</h1>
-      <!--galerie modale--><!--Todo appeler la galerie de la page index et y ajouter les icones-->
+
+      <!--galerie modale-->
       <section class="galleryModal"></section>
+
       <!--formulaire ajout photo-->
+
       <!--ligne de séparation-->
       <p class="line"></p>
-      <form id="gestGallery">
 
+      <form id="gestGallery">
         <input type="submit" href="#modal2" class="jsModifier btnAjouterPhotoModal1" value="Ajouter une photo">
         </input>
       </form>
@@ -65,6 +67,7 @@
       <section id="ajout">
         <h1 id="titleModal2">Ajout photo</h1>
         <form id="insertPhotos" class="insertPhotos" method="post" enctype="multipart/form-data">
+
           <!--Cadre ajout photos-->
           <section id="cadreBleu" class="preview">
             <img class="iconPicture" src="./assets/icons/picture.png" alt="picture"></img>
@@ -72,13 +75,12 @@
               <input id="btnAjouterPhoto" class="btnAjouterPhoto" type="file" name="btnAjouterPhoto" accept=".jpg, .png"
                 value="+ Ajouter photo" />
             </label>
-
             <p>jpg, png : 4mo max</p>
           </section>
+
           <!--formulaire ajout photo-->
           <label for="title">Titre</label>
           <input type="text" name="title" id="titrePhoto" required placeholder="ex: Salon" />
-          <!--<input type="text" name="categoriePhoto" id="categoriePhoto" list="listeCategories" required placeholder="ex: Objets" />-->
           <label for="categoriePhoto">Catégorie</label>
           <select id="categoriePhoto">
             <option value="1">Objets</option>
@@ -87,22 +89,20 @@
           </select>
 
           <div id="output"></div>
+
           <!--ligne de séparation-->
           <p class="line"></p>
-          <input id="validerAjoutPhoto" class="btnAjouterPhotoModal1" type="submit"
-            value="valider" /><!--faire la procedure d'ajout de la photo dans la galerie-->
+
+          <!--Btn Ajout de la photo à la galerie-->
+          <input id="validerAjoutPhoto" class="btnAjouterPhotoModal1" type="submit" value="valider" />
         </form>
       </section>
-
-      <main>
-      </main>
     </div>
   </aside>
   <!-- fin modale 2-->
 
   <header>
     <h1>Sophie Bluel<span>Architecte d'intérieur</span></h1>
-
     <!--barre de navigation-->
     <nav>
       <ul>
@@ -159,7 +159,6 @@
       </article>
     </section>
 
-    <!--boutons des filtres-->
     <section id="portfolio">
       <div class="projets">
         <h2>Mes Projets</h2>
@@ -168,6 +167,7 @@
           <a class="jsModifier" href="#modal1">modifier</a>
         </div>
       </div>
+      <!--boutons des filtres-->
       <div id="filtres" class="editionBtn" style="display: null">
         <input class="btnall" type="button" value="Tous" />
         <input class="btnobjets" type="button" value="Objets" />

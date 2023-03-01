@@ -100,7 +100,7 @@ a {
   color: #000000;
 }
 
-/* barre noir */
+/* barre noir Admin*/
 #maskBarre {
   background-color: #000000;
   font-family: "Work Sans";
@@ -313,7 +313,7 @@ input[type="button"]:focus {
 
 #ajout {
   margin: auto;
-  width: 380px;
+  width: 420px;
 }
 
 #contact label,
@@ -434,11 +434,6 @@ footer nav ul {
   box-sizing: border-box;
 }
 
-*:focus {
-  box-shadow: 0 0 10px rgb(112, 112, 245);
-  /*a enlever en prod*/
-}
-
 /* Modale 1 */
 /* gallerie modale*/
 .galleryModal {
@@ -468,12 +463,18 @@ footer nav ul {
   padding: 4px;
 }
 
-.btnTrash:hover {
+.btnTrash {
+  margin: 1% 10%;
+}
+
+.btnTrash:hover,
+.btnCross:hover {
   padding: 5px;
 }
 
 .btnCross {
-  opacity: 0;
+  margin: 1% 6%;
+  /*opacity: 0;*/
 }
 
 .btnCross:hover {
@@ -537,14 +538,10 @@ footer nav ul {
 /* animation modale*/
 .modal[aria-hidden="true"] {
   animation-name: fadeout;
-  /* animation-direction: reverse; */
-  /* autre methode reverse */
 }
 
 .modal[aria-hidden="true"] .modal-wrapper {
   animation-name: slideToBottom;
-  /* animation-direction: reverse; */
-  /* autre methode reverse */
 }
 
 /* animation CSS*/
