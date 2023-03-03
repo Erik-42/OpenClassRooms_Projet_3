@@ -47,6 +47,30 @@ const closeModal = function (e) {
 	modal1.removeEventListener("click", closeModal);
 	modal1.querySelector(".jsCloseModal").removeEventListener("click", closeModal);
 	modal1.querySelector(".jsModalStop").removeEventListener("click", stopEvent);
+
+	//ferme modal1
+	const btnModal1 = document.getElementById("ajoutPhoto")
+	const crossModal1 = document.querySelector(".jsCloseModal")
+	const hideModal1 = document.getElementById("modal1")
+	btnModal1.addEventListener("click", (e) => {
+		hideModal1.style.display = "none"
+	})
+	crossModal1.addEventListener("click", (e) => {
+		hideModal1.style.display = "none"
+	})
+	//revele modal1
+	const btnModal2 = document.getElementById("validerAjoutPhoto")
+	const revealModal1 = document.getElementById("modal1")
+	btnModal2.addEventListener("click", (e) => {
+		revealModal1.style.display = null
+	})
+	//retour modal2-->modal1
+	const btnBack = document.querySelector(".back");
+	const hideModal2 = document.getElementById("modal2");
+	btnBack.addEventListener("click", (e) => {
+		hideModal2.style.display = "none";
+		revealModal1.style.display = null
+	});
 };
 
 // bloque evenement
@@ -142,7 +166,7 @@ async function genererFicheModal(fiches) {
 		})
 	}
 }
-//Création des fiches
+//Création des fiches de la modal
 await genererFicheModal();
 
 //Todo Faire édition galerie
@@ -152,44 +176,33 @@ await genererFicheModal();
 const loadModal = async function (url) {
 	const target = "#" + url.split("#")[1];
 	const existingModal1 = document.querySelector(target);
-	console.log(existingModal1)
 	if (existingModal1 !== null) return existingModal1;
 	const html = await fetch(url).then((reponse) => reponse.text());
 	const element = document.createRange().createContextualFragment(html).querySelector(target).setAttribute("aria-hidden", "false")
-	existingModal1.document.getElementById("modal1").style.display = "none"
 	if (element === null)
 		throw "L'element ${target} na pas été trouvé dans la page ${url}";
 	document.body.append(element);
 	return target;
 };
 
-//retour modal2-->modal1
-const btnBack = document.querySelector(".back");
-const hideModal2 = document.getElementById("modal2");
-btnBack.addEventListener("click", (e) => {
-	hideModal2.style.display = "none";
-});
-
 //modal 2
 //preview image
 const imgPreview = document.getElementById("cadreBleu");
 const choixImage = document.getElementById("btnAjouterPhoto");
-const elementGris = document.getElementById("validerAjoutPhoto")
 const photo = document.getElementById("btnAjouterPhoto")
 const insertPhotoForm = document.getElementById("insertPhotos");
 const title = document.getElementById("titrePhoto")
 const categorie = document.getElementById("categoriePhoto")
+const elementGris = document.getElementById("validerAjoutPhoto")
 
-btnAjouterPhoto.addEventListener("change", function () {
+elementGris.disabled = true
+elementGris.style.backgroundColor = "grey"
+photo.addEventListener("change", function () {
+	elementGris.removeAttribute("style")
+	elementGris.disabled = false
 	getImgData();
 });
-if (FileList.length == 0) {
-	//elementGris.disabled = true
-	elementGris.style.backgroundColor = "grey"
-} else if (FileList.length == 1) {
-	//elementGris.disabled = false
-	elementGris.style.backgroundColor = "red"
-}
+
 //Recupere et affiche la photo choisie
 function getImgData() {
 	const files = btnAjouterPhoto.files[0];
@@ -214,13 +227,10 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 
 	const projet = await fetch("http://localhost:5678/api/works", {
 		method: "POST",
-
 		headers: {
-
 			"Authorization": `Bearer ${token}`
 		},
 		body: dataAjout,
-
 	});
 	window.sessionStorage.removeItem("fiches")
 	title.value = ""
@@ -229,7 +239,6 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 
 	genererFicheModal()
 	closeModal();
-
 });
 
 /*Todo supprimer completement la galerie*/
