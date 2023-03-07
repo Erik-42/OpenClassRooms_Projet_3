@@ -169,7 +169,7 @@ async function genererFicheModal(fiches) {
 //Création des fiches de la modal
 await genererFicheModal();
 
-//Todo Faire édition galerie
+/*Todo Faire édition galerie*/
 //editGallery() {}
 
 // Changement modal modal1--> modal2

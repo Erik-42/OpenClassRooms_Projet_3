@@ -10,6 +10,7 @@ deconnect.addEventListener("click", (event) => {
   window.sessionStorage.clear();
 });
 
+//cache filtres si login
 if (token) {
   let jsEdition = document.querySelectorAll(".jsEdition");
   for (let i = 0; i < jsEdition.length; i++) {
