@@ -98,6 +98,9 @@ window.addEventListener("keydown", function (e) {
 	if (e.key === "Tab" && modal1 !== null) {
 		focusInModal(e);
 	}
+	if (e.key === "Tab" && modal2 !== null) {
+		focusInModal(e);
+	}
 });
 
 //galerie Modal1

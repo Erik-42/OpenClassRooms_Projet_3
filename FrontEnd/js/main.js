@@ -57,11 +57,11 @@ export async function genererFiches(fiches) {
 //Création des fiches
 await genererFiches(fiches);
 
-/*const majAccueil = document.querySelector(".jsCloseModal")
+const majAccueil = document.querySelector(".jsCloseModal")
 majAccueil.addEventListener("click", function () {
   window.sessionStorage.removeItem("fiches")
   genererFiches(fiches);
-})*/
+})
 
 //Filtres
 //ToDo améliorer code des filtres avec une boucle
