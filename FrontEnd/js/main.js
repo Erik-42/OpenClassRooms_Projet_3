@@ -57,9 +57,14 @@ export async function genererFiches(fiches) {
 //Création des fiches
 await genererFiches(fiches);
 
-//Filtres
-/*ToDo améliorer code des filtres avec une boucle*/
+/*const majAccueil = document.querySelector(".jsCloseModal")
+majAccueil.addEventListener("click", function () {
+  window.sessionStorage.removeItem("fiches")
+  genererFiches(fiches);
+})*/
 
+//Filtres
+//ToDo améliorer code des filtres avec une boucle
 //Filtres Tous
 const btnAll = document.querySelector(".btnall");
 btnAll.addEventListener("click", function () {
@@ -99,3 +104,5 @@ btnHotels.addEventListener("click", function () {
   document.querySelector(".gallery").innerHTML = "";
   genererFiches(filtresFiches);
 });
+
+
