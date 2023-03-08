@@ -474,10 +474,10 @@ footer nav ul {
 
 .btnCross {
   margin: 1% 6%;
-  /*opacity: 0;*/
+  opacity: 0;
 }
 
-.btnCross:hover {
+.figureGallery:hover .btnCross {
   opacity: 1;
 }
 

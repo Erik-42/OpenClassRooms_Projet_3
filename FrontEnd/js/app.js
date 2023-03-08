@@ -1,53 +1,58 @@
 // Récupération des fiches eventuellement stockées dans le sessionStorage
 let fiches = window.sessionStorage.getItem("fiches");
-
 // recup du token dans le session storage
 let token = window.sessionStorage.getItem("token");
-
-// gestion des modales
-//modales
-let modal1 = null;
+//declaration des modales
+let modal1 = document.querySelector("#modal1");
+let modal2 = document.querySelector("#modal2");
 
 //focus pour tab
 const focusableSelector = "button, a, input, textarea";
 let focusables = [];
 let focusElementPrecedent = null;
 
-// ouverture de la modale1
+// gestion des modales
+// ouverture de la modale
 const openModal1 = async function (e) {
-	e.preventDefault();
-	const target = e.target.getAttribute("href");
-	if (target.startsWith("#")) {
-		modal1 = document.querySelector(target);
-	} else {
-		modal1 = await loadModal(target);
-	}
+	if (e) e.preventDefault();
 	focusables = Array.from(modal1.querySelectorAll(focusableSelector));
 	focusElementPrecedent = document.querySelector(":focus");
 	modal1.style.display = null;
 	focusables[0].focus();
 	modal1.removeAttribute("aria-hidden");
 	modal1.setAttribute("aria-modal", "true");
-	modal1.addEventListener("click", closeModal);
-	modal1.querySelector(".jsCloseModal").addEventListener("click", closeModal);
+	modal1.addEventListener("click", closeModal1);
+	modal1.querySelector(".jsCloseModal").addEventListener("click", closeModal1);
 	modal1.querySelector(".jsModalStop").addEventListener("click", stopEvent);
 };
 
-// fermeture des modales
-const closeModal = function (e) {
-	if (modal1 === null) return;
-	if (focusElementPrecedent !== null) focusElementPrecedent.focus();
-	if (e) { e.preventDefault() };
-	window.setTimeout(function () {
-		modal1.style.display = "none";
-		modal1 = null;
-	}, 500);
-	modal1.setAttribute("aria-hidden", "true");
-	modal1.removeAttribute("aria-modal");
-	modal1.removeEventListener("click", closeModal);
-	modal1.querySelector(".jsCloseModal").removeEventListener("click", closeModal);
-	modal1.querySelector(".jsModalStop").removeEventListener("click", stopEvent);
+const openModal2 = async function (e) {
+	if (e) e.preventDefault();
+	focusables = Array.from(modal2.querySelectorAll(focusableSelector));
+	focusElementPrecedent = document.querySelector(":focus");
+	modal2.style.display = null;
+	focusables[0].focus();
+	modal2.removeAttribute("aria-hidden");
+	modal2.setAttribute("aria-modal", "true");
+	modal2.addEventListener("click", closeModal2);
+	modal2.querySelector(".jsCloseModal").addEventListener("click", closeModal2);
+	modal2.querySelector(".jsModalStop").addEventListener("click", stopEvent);
+	closeModal1()
 };
+
+const closeModal1 = function (e) {
+	if (e) { e.preventDefault() };
+	modal1.style.display = "none"
+}
+const closeModal2 = function (e) {
+	if (e) { e.preventDefault() };
+	modal2.style.display = "none"
+}
+const btnBack = document.querySelector(".back");
+btnBack.addEventListener("click", (e) => {
+	closeModal2()
+	openModal1()
+});
 
 // bloque evenement
 const stopEvent = function (e) {
@@ -74,10 +79,11 @@ const focusInModal = function (e) {
 	focusables[index].focus();
 };
 
-// lien pour ouvrir la modal1
+// lien pour ouvrir les modal
 document.querySelectorAll(".jsModifier").forEach((a) => {
 	a.addEventListener("click", openModal1);
 });
+document.querySelector(".btnAjouterPhotoModal1").addEventListener("click", openModal2)
 
 // gestion touche escape
 window.addEventListener("keydown", function (e) {
@@ -139,57 +145,47 @@ async function genererFicheModal(fiches) {
 			})
 			window.sessionStorage.removeItem("fiches")
 			genererFicheModal()
+			genererFiches()
 		})
 	}
 }
-//Création des fiches
+//Création des fiches de la modal
 await genererFicheModal();
 
-//Todo Faire édition galerie
+/*Todo Faire édition galerie*/
 //editGallery() {}
 
 // Changement modal modal1--> modal2
 const loadModal = async function (url) {
 	const target = "#" + url.split("#")[1];
 	const existingModal1 = document.querySelector(target);
-	console.log(existingModal1)
 	if (existingModal1 !== null) return existingModal1;
 	const html = await fetch(url).then((reponse) => reponse.text());
 	const element = document.createRange().createContextualFragment(html).querySelector(target).setAttribute("aria-hidden", "false")
-	existingModal1.document.getElementById("modal1").style.display = "none"
 	if (element === null)
 		throw "L'element ${target} na pas été trouvé dans la page ${url}";
 	document.body.append(element);
 	return target;
 };
 
-//retour modal2-->modal1
-const btnBack = document.querySelector(".back");
-const hideModal2 = document.getElementById("modal2");
-btnBack.addEventListener("click", (e) => {
-	hideModal2.style.display = "none";
-});
-
 //modal 2
 //preview image
 const imgPreview = document.getElementById("cadreBleu");
 const choixImage = document.getElementById("btnAjouterPhoto");
-const elementGris = document.getElementById("validerAjoutPhoto")
 const photo = document.getElementById("btnAjouterPhoto")
 const insertPhotoForm = document.getElementById("insertPhotos");
 const title = document.getElementById("titrePhoto")
 const categorie = document.getElementById("categoriePhoto")
+const elementGris = document.getElementById("validerAjoutPhoto")
 
-btnAjouterPhoto.addEventListener("change", function () {
+elementGris.disabled = true
+elementGris.style.backgroundColor = "grey"
+photo.addEventListener("change", function () {
+	elementGris.removeAttribute("style")
+	elementGris.disabled = false
 	getImgData();
 });
-if (FileList.length == 0) {
-	//elementGris.disabled = true
-	elementGris.style.backgroundColor = "grey"
-} else if (FileList.length == 1) {
-	//elementGris.disabled = false
-	elementGris.style.backgroundColor = "red"
-}
+
 //Recupere et affiche la photo choisie
 function getImgData() {
 	const files = btnAjouterPhoto.files[0];
@@ -214,13 +210,10 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 
 	const projet = await fetch("http://localhost:5678/api/works", {
 		method: "POST",
-
 		headers: {
-
 			"Authorization": `Bearer ${token}`
 		},
 		body: dataAjout,
-
 	});
 	window.sessionStorage.removeItem("fiches")
 	title.value = ""
@@ -228,8 +221,9 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 	//photo.files = 0
 
 	genererFicheModal()
-	closeModal();
-
+	genererFiches()
+	closeModal2()
+	openModal1();
 });
 
 /*Todo supprimer completement la galerie*/
