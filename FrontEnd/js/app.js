@@ -46,6 +46,7 @@ const openModal2 = async function (e) {
 const closeModal1 = function (e) {
 	if (e) { e.preventDefault() };
 	modal1.style.display = "none"
+	window.location.reload()
 }
 const closeModal2 = function (e) {
 	if (e) { e.preventDefault() };
