@@ -101,18 +101,18 @@ window.addEventListener("keydown", function (e) {
 });
 
 //galerie Modal1
-// Création des fiches
-async function genererFicheModal(fiches) {
+// Création des fichesModal
+async function genererFicheModal(fichesModal) {
 
 	const askApiModal = await fetch(urlApi);
-	fiches = await askApiModal.json();
+	fichesModal = await askApiModal.json();
 
-	// Récupération de l'élément du DOM qui accueillera les fiches
+	// Récupération de l'élément du DOM qui accueillera les fichesModal
 	const sectionGalleryModal = document.querySelector(".galleryModal");
 	sectionGalleryModal.innerHTML = ""
 
-	for (let i = 0; i < fiches.length; i++) {
-		const worksModal = fiches[i];
+	for (let i = 0; i < fichesModal.length; i++) {
+		const worksModal = fichesModal[i];
 
 		//création de la balise pour les fiches - balise<figure>
 		const ficheElement = document.createElement("figure");
@@ -148,13 +148,13 @@ async function genererFicheModal(fiches) {
 					"Authorization": `Bearer ${token}`
 				},
 			})
-			window.sessionStorage.removeItem("fiches")
+			window.sessionStorage.removeItem("fichesModal")
 			genererFicheModal()
 			genererFiches()
 		})
 	}
 }
-//Création des fiches de la modal
+//Création des fichesModal de la modal
 await genererFicheModal();
 
 /*Todo Faire édition galerie*/
@@ -205,7 +205,7 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 		body: dataAjout,
 
 	});
-	window.sessionStorage.removeItem("fiches")
+	window.sessionStorage.removeItem("fichesModal")
 	title.value = ""
 	categorie.value = "1"
 	//reconstruction de l'ajout photo
