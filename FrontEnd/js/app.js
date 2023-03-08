@@ -1,4 +1,4 @@
-//import { genererFiches } from "./main.js";
+
 // Récupération des fiches eventuellement stockées dans le sessionStorage
 //let fiches = window.sessionStorage.getItem("fiches");
 let urlApi = "http://localhost:5678/api/works";
@@ -148,7 +148,7 @@ async function genererFicheModal(fiches) {
 			})
 			window.sessionStorage.removeItem("fiches")
 			genererFicheModal()
-			//genererFiches()
+
 		})
 	}
 }
@@ -250,9 +250,9 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 		elementGris.disabled = false
 		getImgData(inputAjouterPhoto);
 	});
-	photo = inputAjouterPhoto
+
 	genererFicheModal()
-	//genererFiches()
+
 	closeModal2()
 	openModal1();
 
