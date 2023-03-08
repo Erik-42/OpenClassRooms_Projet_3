@@ -1,6 +1,6 @@
 import { genererFiches } from "./main.js";
 // Récupération des fiches eventuellement stockées dans le sessionStorage
-let fiches = window.sessionStorage.getItem("fiches");
+let fiches = null
 let urlApi = "http://localhost:5678/api/works";
 // recup du token dans le session storage
 let token = window.sessionStorage.getItem("token");
