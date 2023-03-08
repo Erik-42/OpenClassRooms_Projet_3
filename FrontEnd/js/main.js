@@ -2,9 +2,9 @@
 let token = window.sessionStorage.getItem("token");
 
 //Récupération des fiches eventuellement stockées dans le sessionStorage
-let fiches = window.sessionStorage.getItem("fiches");
-const deconnect = document.getElementById("logout");
+let fiches = null
 
+const deconnect = document.getElementById("logout");
 // deconnexion
 deconnect.addEventListener("click", (event) => {
   window.sessionStorage.clear();
