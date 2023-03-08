@@ -1,4 +1,4 @@
-//import { genererFiches } from "./main.js";
+import { genererFiches } from "./main.js";
 // Récupération des fiches eventuellement stockées dans le sessionStorage
 //let fiches = window.sessionStorage.getItem("fiches");
 let urlApi = "http://localhost:5678/api/works";
@@ -28,7 +28,7 @@ const openModal1 = async function (e) {
 	modal1.querySelector(".jsCloseModal").addEventListener("click", closeModal1);
 	modal1.querySelector(".jsModalStop").addEventListener("click", stopEvent);
 };
-
+// ouverture de la modale2
 const openModal2 = async function (e) {
 	if (e) e.preventDefault();
 	focusables = Array.from(modal2.querySelectorAll(focusableSelector));
@@ -42,16 +42,18 @@ const openModal2 = async function (e) {
 	modal2.querySelector(".jsModalStop").addEventListener("click", stopEvent);
 	closeModal1()
 };
-
+// fermeture de la modale1
 const closeModal1 = function (e) {
 	if (e) { e.preventDefault() };
 	modal1.style.display = "none"
 	window.location.reload()
 }
+// fermeture de la modale2
 const closeModal2 = function (e) {
 	if (e) { e.preventDefault() };
 	modal2.style.display = "none"
 }
+// retour de la modale1
 const btnBack = document.querySelector(".back");
 btnBack.addEventListener("click", (e) => {
 	closeModal2()
@@ -92,7 +94,8 @@ document.querySelector(".btnAjouterPhotoModal1").addEventListener("click", openM
 // gestion touche escape
 window.addEventListener("keydown", function (e) {
 	if (e.key === "Escape" || e.key === "Esc") {
-		closeModal(e);
+		closeModal1(e);
+		closeModal2(e);
 	}
 	if (e.key === "Tab" && modal1 !== null) {
 		focusInModal(e);
@@ -149,7 +152,7 @@ async function genererFicheModal(fiches) {
 			})
 			window.sessionStorage.removeItem("fiches")
 			genererFicheModal()
-			//genererFiches()
+			genererFiches()
 		})
 	}
 }
@@ -158,19 +161,6 @@ await genererFicheModal();
 
 /*Todo Faire édition galerie*/
 //editGallery() {}
-
-// Changement modal modal1--> modal2
-const loadModal = async function (url) {
-	const target = "#" + url.split("#")[1];
-	const existingModal1 = document.querySelector(target);
-	if (existingModal1 !== null) return existingModal1;
-	const html = await fetch(url).then((reponse) => reponse.text());
-	const element = document.createRange().createContextualFragment(html).querySelector(target).setAttribute("aria-hidden", "false")
-	if (element === null)
-		throw "L'element ${target} na pas été trouvé dans la page ${url}";
-	document.body.append(element);
-	return target;
-};
 
 //modal 2
 //preview image
@@ -221,7 +211,7 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 	window.sessionStorage.removeItem("fiches")
 	title.value = ""
 	categorie.value = "1"
-
+	//reconstruction de l'ajout photo
 	imgPreview.style.display = null
 	imgPreview.innerHTML = ""
 	const imgIconePicture = document.createElement("img")
@@ -246,18 +236,17 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 	labelAjouterPhoto.appendChild(inputAjouterPhoto)
 	elementGris.disabled = true
 	elementGris.style.backgroundColor = "grey"
+
 	inputAjouterPhoto.addEventListener("change", function () {
 		elementGris.removeAttribute("style")
 		elementGris.disabled = false
 		getImgData(inputAjouterPhoto);
 	});
-	photo = inputAjouterPhoto
-	genererFicheModal()
-	//genererFiches()
-	closeModal2()
-	openModal1();
 
-	//alert("User " + works.statusText);
+	genererFicheModal()
+	genererFiches()
+	closeModal2()
+	openModal1()
 });
 
 /*Todo supprimer completement la galerie*/
