@@ -37,7 +37,7 @@ async function genererFiches(fiches) {
     //création de la balise pour les fiches - balise<figure>
     const ficheElement = document.createElement("figure");
     ficheElement.classList.add("figureGallery")
-    ficheElement.dataset.index = works.id
+    //ficheElement.dataset.index = works.id
 
     //Création des images
     const imageElement = document.createElement("img");
@@ -57,11 +57,11 @@ async function genererFiches(fiches) {
 //Création des fiches
 await genererFiches(fiches);
 
-const majAccueil = document.querySelector(".jsCloseModal")
+/*const majAccueil = document.querySelector(".jsCloseModal")
 majAccueil.addEventListener("click", function () {
   window.sessionStorage.removeItem("fiches")
   genererFiches(fiches);
-})
+})*/
 
 //Filtres
 //ToDo améliorer code des filtres

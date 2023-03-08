@@ -1,77 +1,58 @@
 // Récupération des fiches eventuellement stockées dans le sessionStorage
 let fiches = window.sessionStorage.getItem("fiches");
-
 // recup du token dans le session storage
 let token = window.sessionStorage.getItem("token");
-
-// gestion des modales
-//modales
-let modal1 = null;
+//declaration des modales
+let modal1 = document.querySelector("#modal1");
+let modal2 = document.querySelector("#modal2");
 
 //focus pour tab
 const focusableSelector = "button, a, input, textarea";
 let focusables = [];
 let focusElementPrecedent = null;
 
-// ouverture de la modale1
+// gestion des modales
+// ouverture de la modale
 const openModal1 = async function (e) {
-	e.preventDefault();
-	const target = e.target.getAttribute("href");
-	if (target.startsWith("#")) {
-		modal1 = document.querySelector(target);
-	} else {
-		modal1 = await loadModal(target);
-	}
+	if (e) e.preventDefault();
 	focusables = Array.from(modal1.querySelectorAll(focusableSelector));
 	focusElementPrecedent = document.querySelector(":focus");
 	modal1.style.display = null;
 	focusables[0].focus();
 	modal1.removeAttribute("aria-hidden");
 	modal1.setAttribute("aria-modal", "true");
-	modal1.addEventListener("click", closeModal);
-	modal1.querySelector(".jsCloseModal").addEventListener("click", closeModal);
+	modal1.addEventListener("click", closeModal1);
+	modal1.querySelector(".jsCloseModal").addEventListener("click", closeModal1);
 	modal1.querySelector(".jsModalStop").addEventListener("click", stopEvent);
 };
 
-// fermeture des modales
-const closeModal = function (e) {
-	if (modal1 === null) return;
-	if (focusElementPrecedent !== null) focusElementPrecedent.focus();
-	if (e) { e.preventDefault() };
-	window.setTimeout(function () {
-		modal1.style.display = "none";
-		modal1 = null;
-	}, 500);
-	modal1.setAttribute("aria-hidden", "true");
-	modal1.removeAttribute("aria-modal");
-	modal1.removeEventListener("click", closeModal);
-	modal1.querySelector(".jsCloseModal").removeEventListener("click", closeModal);
-	modal1.querySelector(".jsModalStop").removeEventListener("click", stopEvent);
-
-	//ferme modal1
-	const btnModal1 = document.getElementById("ajoutPhoto")
-	const crossModal1 = document.querySelector(".jsCloseModal")
-	const hideModal1 = document.getElementById("modal1")
-	btnModal1.addEventListener("click", (e) => {
-		hideModal1.style.display = "none"
-	})
-	crossModal1.addEventListener("click", (e) => {
-		hideModal1.style.display = "none"
-	})
-	//revele modal1
-	const btnModal2 = document.getElementById("validerAjoutPhoto")
-	const revealModal1 = document.getElementById("modal1")
-	btnModal2.addEventListener("click", (e) => {
-		revealModal1.style.display = null
-	})
-	//retour modal2-->modal1
-	const btnBack = document.querySelector(".back");
-	const hideModal2 = document.getElementById("modal2");
-	btnBack.addEventListener("click", (e) => {
-		hideModal2.style.display = "none";
-		revealModal1.style.display = null
-	});
+const openModal2 = async function (e) {
+	if (e) e.preventDefault();
+	focusables = Array.from(modal2.querySelectorAll(focusableSelector));
+	focusElementPrecedent = document.querySelector(":focus");
+	modal2.style.display = null;
+	focusables[0].focus();
+	modal2.removeAttribute("aria-hidden");
+	modal2.setAttribute("aria-modal", "true");
+	modal2.addEventListener("click", closeModal2);
+	modal2.querySelector(".jsCloseModal").addEventListener("click", closeModal2);
+	modal2.querySelector(".jsModalStop").addEventListener("click", stopEvent);
+	closeModal1()
 };
+
+const closeModal1 = function (e) {
+	if (e) { e.preventDefault() };
+	modal1.style.display = "none"
+}
+const closeModal2 = function (e) {
+	if (e) { e.preventDefault() };
+	modal2.style.display = "none"
+}
+const btnBack = document.querySelector(".back");
+btnBack.addEventListener("click", (e) => {
+	closeModal2()
+	openModal1()
+});
 
 // bloque evenement
 const stopEvent = function (e) {
@@ -98,10 +79,11 @@ const focusInModal = function (e) {
 	focusables[index].focus();
 };
 
-// lien pour ouvrir la modal1
+// lien pour ouvrir les modal
 document.querySelectorAll(".jsModifier").forEach((a) => {
 	a.addEventListener("click", openModal1);
 });
+document.querySelector(".btnAjouterPhotoModal1").addEventListener("click", openModal2)
 
 // gestion touche escape
 window.addEventListener("keydown", function (e) {
@@ -163,6 +145,7 @@ async function genererFicheModal(fiches) {
 			})
 			window.sessionStorage.removeItem("fiches")
 			genererFicheModal()
+			genererFiches()
 		})
 	}
 }
@@ -238,7 +221,9 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 	//photo.files = 0
 
 	genererFicheModal()
-	closeModal();
+	genererFiches()
+	closeModal2()
+	openModal1();
 });
 
 /*Todo supprimer completement la galerie*/
