@@ -5,10 +5,9 @@ let urlApi = "http://localhost:5678/api/works";
 // recup du token dans le session storage
 let token = window.sessionStorage.getItem("token");
 
-// gestion des modales
-//modales
-let modal1 = document.querySelector("#modal1");
-let modal2 = document.querySelector("#modal2");
+// declaration des modales
+let modal1 = document.getElementById("modal1");
+let modal2 = document.getElementById("modal2");
 
 //focus pour tab
 const focusableSelector = "button, a, input, textarea";
@@ -46,7 +45,6 @@ const openModal2 = async function (e) {
 const closeModal1 = function (e) {
 	if (e) { e.preventDefault() };
 	modal1.style.display = "none"
-	window.location.reload()
 }
 // fermeture de la modale2
 const closeModal2 = function (e) {
@@ -160,7 +158,6 @@ async function genererFicheModal(fiches) {
 await genererFicheModal();
 
 /*Todo Faire édition galerie*/
-//editGallery() {}
 
 //modal 2
 //preview image
@@ -250,4 +247,3 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 });
 
 /*Todo supprimer completement la galerie*/
-//deleteGallery() {}
