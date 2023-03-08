@@ -218,7 +218,35 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 	window.sessionStorage.removeItem("fiches")
 	title.value = ""
 	categorie.value = "1"
-	//photo.files = 0
+
+	imgPreview.style.display = null
+	imgPreview.innerHTML = ""
+	const imgIconePicture = document.createElement("img")
+	imgIconePicture.src = "./assets/icons/picture.png"
+	imgIconePicture.alt = "picture"
+	const labelAjouterPhoto = document.createElement("label")
+	labelAjouterPhoto.id = "btnAjoutPhoto"
+	labelAjouterPhoto.HTMLfor = "btnAjouterPhoto"
+	labelAjouterPhoto.innerHTML = "+ Ajouter photo"
+	const inputAjouterPhoto = document.createElement("input")
+	inputAjouterPhoto.id = "btnAjouterPhoto"
+	inputAjouterPhoto.className = "btnAjouterPhoto"
+	inputAjouterPhoto.type = "file"
+	inputAjouterPhoto.name = "btnAjouterPhoto"
+	inputAjouterPhoto.accept = ".jpg, .png"
+	inputAjouterPhoto.value = ""
+	const pAJouterPhoto = document.createElement("p")
+	pAJouterPhoto.innerHTML = "jpg, png : 4mo max"
+	imgPreview.appendChild(imgIconePicture)
+	imgPreview.appendChild(labelAjouterPhoto)
+	imgPreview.appendChild(pAJouterPhoto)
+	labelAjouterPhoto.appendChild(inputAjouterPhoto)
+	inputAjouterPhoto.addEventListener("change", function () {
+		elementGris.removeAttribute("style")
+		elementGris.disabled = false
+		getImgData(inputAjouterPhoto);
+	});
+	photo = inputAjouterPhoto
 
 	genererFicheModal()
 	genererFiches()
