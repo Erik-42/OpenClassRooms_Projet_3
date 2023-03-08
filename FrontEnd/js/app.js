@@ -1,12 +1,10 @@
 import { genererFiches } from "./main.js";
 // Récupération des fiches eventuellement stockées dans le sessionStorage
-//let fiches = window.sessionStorage.getItem("fiches");
 let urlApi = "http://localhost:5678/api/works";
 // recup du token dans le session storage
 let token = window.sessionStorage.getItem("token");
 
-// gestion des modales
-//modales
+// declaration des modales
 let modal1 = document.querySelector("#modal1");
 let modal2 = document.querySelector("#modal2");
 
@@ -84,7 +82,7 @@ const focusInModal = function (e) {
 	focusables[index].focus();
 };
 
-// lien pour ouvrir la modal1
+// lien pour ouvrir la modal1 et 2
 document.querySelectorAll(".jsModifier").forEach((a) => {
 	a.addEventListener("click", openModal1);
 });
@@ -210,6 +208,7 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 	window.sessionStorage.removeItem("fiches")
 	title.value = ""
 	categorie.value = "1"
+
 	//reconstruction de l'ajout photo
 	imgPreview.style.display = null
 	imgPreview.innerHTML = ""
