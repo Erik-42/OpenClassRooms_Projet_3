@@ -25,7 +25,7 @@ const askApi = await fetch("http://localhost:5678/api/works");
 fiches = await askApi.json();
 
 // Création des Fiches Projets
-async function genererFiches(fiches) {
+export async function genererFiches(fiches) {
 
   // Récupération de l'élément du DOM qui accueille les fiches
   const sectionGallery = document.querySelector(".gallery");
@@ -37,7 +37,7 @@ async function genererFiches(fiches) {
     //création de la balise pour les fiches - balise<figure>
     const ficheElement = document.createElement("figure");
     ficheElement.classList.add("figureGallery")
-    //ficheElement.dataset.index = works.id
+    ficheElement.dataset.index = works.id
 
     //Création des images
     const imageElement = document.createElement("img");
@@ -45,7 +45,7 @@ async function genererFiches(fiches) {
     const titleElement = document.createElement("figcaption");
     titleElement.innerText = works.title;
 
-    // On rattache la balise <article> a la <div gallery>
+    // On rattache la balise <article> a la <section gallery>
     sectionGallery.appendChild(ficheElement);
 
     //Rattachement de des balises au DOM
@@ -57,14 +57,14 @@ async function genererFiches(fiches) {
 //Création des fiches
 await genererFiches(fiches);
 
-const majAccueil = document.querySelector(".jsCloseModal")
+/*const majAccueil = document.querySelector(".jsCloseModal")
 majAccueil.addEventListener("click", function () {
   window.sessionStorage.removeItem("fiches")
   genererFiches(fiches);
-})
+})*/
 
 //Filtres
-//ToDo améliorer code des filtres
+//ToDo améliorer code des filtres avec une boucle
 //Filtres Tous
 const btnAll = document.querySelector(".btnall");
 btnAll.addEventListener("click", function () {
