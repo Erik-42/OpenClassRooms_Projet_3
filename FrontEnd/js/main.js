@@ -2,14 +2,13 @@
 let token = window.sessionStorage.getItem("token");
 
 //Récupération des fiches eventuellement stockées dans le sessionStorage
-let fiches = null
+let fiches = window.sessionStorage.getItem("fiches");
 
-const deconnect = document.getElementById("logout");
 // deconnexion
+const deconnect = document.getElementById("logout");
 deconnect.addEventListener("click", (event) => {
   window.sessionStorage.clear();
 });
-
 //cache filtres si login
 if (token) {
   let jsEdition = document.querySelectorAll(".jsEdition");
@@ -25,7 +24,7 @@ const askApi = await fetch("http://localhost:5678/api/works");
 fiches = await askApi.json();
 
 // Création des Fiches Projets
-export async function genererFiches(fiches) {
+async function genererFiches(fiches) {
 
   // Récupération de l'élément du DOM qui accueille les fiches
   const sectionGallery = document.querySelector(".gallery");
@@ -45,7 +44,7 @@ export async function genererFiches(fiches) {
     const titleElement = document.createElement("figcaption");
     titleElement.innerText = works.title;
 
-    // On rattache la balise <article> a la <section gallery>
+    // On rattache la balise <article> a la <div gallery>
     sectionGallery.appendChild(ficheElement);
 
     //Rattachement de des balises au DOM
@@ -57,14 +56,8 @@ export async function genererFiches(fiches) {
 //Création des fiches
 await genererFiches(fiches);
 
-const majAccueil = document.querySelector(".jsCloseModal")
-majAccueil.addEventListener("click", function () {
-  window.sessionStorage.removeItem("fiches")
-  genererFiches(fiches);
-})
-
 //Filtres
-//ToDo améliorer code des filtres avec une boucle
+//ToDo améliorer code des filtres
 //Filtres Tous
 const btnAll = document.querySelector(".btnall");
 btnAll.addEventListener("click", function () {
