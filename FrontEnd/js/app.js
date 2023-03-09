@@ -192,7 +192,7 @@ elementGris.style.backgroundColor = "grey"
 photo.addEventListener("change", function () {
 	elementGris.removeAttribute("style")
 	elementGris.disabled = false
-	//getImgData();
+	getImgData();
 });
 
 //Recupere et affiche la photo choisie
