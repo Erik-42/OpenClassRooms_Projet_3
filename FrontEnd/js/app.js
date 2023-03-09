@@ -1,7 +1,6 @@
-import { genererFiches } from "./main.js";
 // Récupération des fiches eventuellement stockées dans le sessionStorage
-let fiches = null
-let urlApi = "http://localhost:5678/api/works";
+let fiches = window.sessionStorage.getItem("fiches");
+//let fiches = null
 // recup du token dans le session storage
 let token = window.sessionStorage.getItem("token");
 
@@ -87,6 +86,7 @@ const focusInModal = function (e) {
 document.querySelectorAll(".jsModifier").forEach((a) => {
 	a.addEventListener("click", openModal1);
 });
+// lien pour ouvrir la modal2
 document.querySelector(".btnAjouterPhotoModal1").addEventListener("click", openModal2)
 
 // gestion touche escape
@@ -98,24 +98,21 @@ window.addEventListener("keydown", function (e) {
 	if (e.key === "Tab" && modal1 !== null) {
 		focusInModal(e);
 	}
-	if (e.key === "Tab" && modal2 !== null) {
-		focusInModal(e);
-	}
 });
 
 //galerie Modal1
-// Création des fichesModal
-async function genererFicheModal(fichesModal) {
+// Création des fiches
+async function genererFicheModal(fiches) {
 
-	const askApiModal = await fetch(urlApi);
-	fichesModal = await askApiModal.json();
+	const askApiModal = await fetch("http://localhost:5678/api/works");
+	fiches = await askApiModal.json();
 
-	// Récupération de l'élément du DOM qui accueillera les fichesModal
+	// Récupération de l'élément du DOM qui accueillera les fiches
 	const sectionGalleryModal = document.querySelector(".galleryModal");
 	sectionGalleryModal.innerHTML = ""
 
-	for (let i = 0; i < fichesModal.length; i++) {
-		const worksModal = fichesModal[i];
+	for (let i = 0; i < fiches.length; i++) {
+		const worksModal = fiches[i];
 
 		//création de la balise pour les fiches - balise<figure>
 		const ficheElement = document.createElement("figure");
@@ -151,37 +148,56 @@ async function genererFicheModal(fichesModal) {
 					"Authorization": `Bearer ${token}`
 				},
 			})
-			window.sessionStorage.removeItem("fichesModal")
+			window.sessionStorage.removeItem("fiches")
 			genererFicheModal()
-			genererFiches()
 		})
 	}
 }
-//Création des fichesModal de la modal
+//Création des fiches
 await genererFicheModal();
 
-/*Todo Faire édition galerie*/
+//Todo Faire édition galerie
+
+// Changement modal modal1--> modal2
+const loadModal = async function (url) {
+	const target = "#" + url.split("#")[1];
+	const existingModal1 = document.querySelector(target);
+	if (existingModal1 !== null) return existingModal1;
+	const html = await fetch(url).then((reponse) => reponse.text());
+	const element = document.createRange().createContextualFragment(html).querySelector(target).setAttribute("aria-hidden", "false")
+	existingModal1.document.getElementById("modal1").style.display = "none"
+	if (element === null)
+		throw "L'element ${target} na pas été trouvé dans la page ${url}";
+	document.body.append(element);
+	return target;
+};
 
 //modal 2
 //preview image
 const imgPreview = document.getElementById("cadreBleu");
-let photo = document.getElementById("btnAjouterPhoto")
+//const choixImage = document.getElementById("btnAjouterPhoto");
+const photo = document.getElementById("btnAjouterPhoto")
 const insertPhotoForm = document.getElementById("insertPhotos");
 const title = document.getElementById("titrePhoto")
 const categorie = document.getElementById("categoriePhoto")
 const elementGris = document.getElementById("validerAjoutPhoto")
 
+/*photo.addEventListener("change", function () {
+	getImgData();
+});*/
+
+//gestion du bouton valider
 elementGris.disabled = true
 elementGris.style.backgroundColor = "grey"
 photo.addEventListener("change", function () {
 	elementGris.removeAttribute("style")
 	elementGris.disabled = false
-	getImgData(photo);
+	//getImgData();
 });
 
 //Recupere et affiche la photo choisie
-function getImgData(photo) {
-	const files = photo.files[0];
+function getImgData() {
+	const files = btnAjouterPhoto.files[0];
 	if (files) {
 		const fileReader = new FileReader();
 		fileReader.readAsDataURL(files);
@@ -195,12 +211,13 @@ function getImgData(photo) {
 //Ajout de photo à la galerie
 insertPhotoForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
+
 	const dataAjout = new FormData()
 	dataAjout.append("title", title.value)
 	dataAjout.append("category", categorie.value)
 	dataAjout.append("image", photo.files[0])
 
-	const projet = await fetch(urlApi, {
+	const projet = await fetch("http://localhost:5678/api/works", {
 		method: "POST",
 		headers: {
 			"Authorization": `Bearer ${token}`
@@ -208,9 +225,10 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 		body: dataAjout,
 
 	});
-	window.sessionStorage.removeItem("fichesModal")
+	window.sessionStorage.removeItem("fiches")
 	title.value = ""
 	categorie.value = "1"
+
 	//reconstruction de l'ajout photo
 	imgPreview.style.display = null
 	imgPreview.innerHTML = ""
@@ -234,9 +252,9 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 	imgPreview.appendChild(labelAjouterPhoto)
 	imgPreview.appendChild(pAJouterPhoto)
 	labelAjouterPhoto.appendChild(inputAjouterPhoto)
+
 	elementGris.disabled = true
 	elementGris.style.backgroundColor = "grey"
-
 	inputAjouterPhoto.addEventListener("change", function () {
 		elementGris.removeAttribute("style")
 		elementGris.disabled = false
@@ -244,9 +262,9 @@ insertPhotoForm.addEventListener("submit", async (event) => {
 	});
 
 	genererFicheModal()
-	genererFiches()
 	closeModal2()
 	openModal1()
 });
 
 /*Todo supprimer completement la galerie*/
+//deleteGallery() {}
